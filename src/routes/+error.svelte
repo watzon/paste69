@@ -3,8 +3,6 @@
 	import { page } from '$app/stores';
 	import ToolBox from '$lib/components/ToolBox.svelte';
 	import { ChevronRight } from 'svelte-tabler';
-
-	console.log($page);
 </script>
 
 <svelte:head>

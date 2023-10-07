@@ -7,8 +7,6 @@ export const POST: RequestHandler = async ({ params, request }) => {
     const { id } = params;
     const { password } = await request.json();
 
-    console.log(password);
-
     const paste = await pastes.findOne({ id });
 
     if (!paste) {

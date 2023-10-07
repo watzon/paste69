@@ -11,10 +11,10 @@ interface ServerError extends Error {
 }
 
 export const handleError: HandleServerError = ({ error, event }) => {
-        Sentry.captureException(error, { extra: { event } });
+    Sentry.captureException(error, { extra: { event } });
 
-        return {
-            message: 'Uh oh! An unexpected error occurred.',
-            code: (error as ServerError)?.code ?? '500',
-        };
+    return {
+        message: 'Uh oh! An unexpected error occurred.',
+        code: (error as ServerError)?.code ?? '500',
+    };
 };

@@ -27,6 +27,7 @@
 		type: 'component',
 		component: modalComponent,
 		response: (data: typeof extraOptions) => {
+			if (!data) return;
 			extraOptions = data;
 			onSave();
 		},
