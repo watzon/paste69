@@ -88,7 +88,7 @@
 	<!-- prettier-ignore -->
     <div class="markdown text-xl max-w-[90ch] pb-24">{@html contents}</div>
 {:else}
-    <pre class="pt-5 pb-24 w-full whitespace-pre-wrap" bind:this={codeRef} on:dblclick={() => selectAll()} ><code>{@html contents}</code></pre>
+    <pre class="pl-2 pt-5 pb-24 max-w-full break-words whitespace-pre-line" bind:this={codeRef} on:dblclick={() => selectAll()} ><code>{@html contents}</code></pre>
 {/if}
 
 <div class="fixed bottom-0 right-0 w-full md:w-auto">

@@ -17,7 +17,7 @@
 	<ToolBox disableSave={true} disableCopy={true} on:new={() => goto('/')} />
 </div>
 
-<div class="pl-8 max-w-[100ch] pb-24">
+<div class="pl-2 pr-2 max-w-[100ch] pb-24">
 	<h1 class="h1 mb-2">Paste69</h1>
 
 	<p class="mb-4 mt-4">
