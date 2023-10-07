@@ -15,7 +15,7 @@
 </script>
 
 <textarea
-    class="w-full h-full bg-transparent border-none resize-none outline-none"
+    class="pl-12 pt-5 w-full h-full bg-transparent border-none resize-none outline-none"
     bind:value={contents}
     bind:this={ref}
     {...$$restProps}

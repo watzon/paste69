@@ -78,7 +78,6 @@
 	}
 
 	$: contents = renderMarkdown ? markdown(decryptedData ?? data.contents) : highlight(decryptedData ?? data.contents, data.highlight);
-	$: lineCount = contents.split('\n').length;
 </script>
 
 <svelte:head>
@@ -89,12 +88,7 @@
 	<!-- prettier-ignore -->
     <div class="markdown text-xl max-w-[90ch] pb-24">{@html contents}</div>
 {:else}
-	<div class="absolute text-left text-gray-500 top-0 left-0 bottom-0 w-[45px] pt-[20px] pl-[5px]">
-		{#each Array.from({ length: lineCount }) as _, i}
-			<div>{i + 1}</div>
-		{/each}
-  	</div>
-    <pre class="pb-24" bind:this={codeRef} on:dblclick={() => selectAll()} ><code>{@html contents}</code></pre>
+    <pre class="pt-5 pb-24 w-full whitespace-pre-wrap" bind:this={codeRef} on:dblclick={() => selectAll()} ><code>{@html contents}</code></pre>
 {/if}
 
 <div class="fixed bottom-0 right-0 w-full md:w-auto">
