@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 import { pastes } from '$db/index';
+import { SITE_URL } from '$env/static/private';
 
 export const load: PageLoad = async ({ params }) => {
     const [id, ext] = params.slug.split('.');
@@ -14,6 +15,7 @@ export const load: PageLoad = async ({ params }) => {
     // Build the response object
     const response = {
         id: paste.id,
+        url: `${SITE_URL}/${id}.${paste.highlight}`,
         contents: paste.contents,
         encrypted: paste.encrypted,
         highlight: ext || paste.highlight,

@@ -82,13 +82,19 @@
 
 <svelte:head>
     <title>Paste69 - Paste {data.id}</title>
+	<meta name="description" content="Paste69 - Paste {data.id}" />
+	<meta property="og:title" content="Paste69 - Paste {data.id}" />
+	<meta property="og:description" content="Paste69 - Paste {data.id}" />
+	<meta property="og:image" content="/images/paste/{data.id}" />
+	<meta property="og:url" content={data.url} />
+	<meta property="og:type" content="website" />
 </svelte:head>
 
 {#if renderMarkdown}
 	<!-- prettier-ignore -->
     <div class="markdown text-xl max-w-[90ch] pb-24">{@html contents}</div>
 {:else}
-    <pre class="pl-2 pt-5 pb-24 max-w-full break-words whitespace-pre-line" bind:this={codeRef} on:dblclick={() => selectAll()} ><code>{@html contents}</code></pre>
+    <pre class="pl-2 pt-5 pb-24 min-h-full max-w-full break-words whitespace-pre-line overflow-x-auto" bind:this={codeRef} on:dblclick={() => selectAll()} ><code>{@html contents}</code></pre>
 {/if}
 
 <div class="fixed bottom-0 right-0 w-full md:w-auto">
