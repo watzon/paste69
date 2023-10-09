@@ -7,6 +7,7 @@
 	import { markdown } from '$utils/markdown';
 	import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import { sleep } from '$utils/index';
+	import { ChevronRight } from 'svelte-tabler';
 
 	let codeRef: HTMLPreElement;
 
@@ -92,9 +93,12 @@
 
 {#if renderMarkdown}
 	<!-- prettier-ignore -->
-    <div class="markdown text-xl max-w-[90ch] pb-24">{@html contents}</div>
+    <div class="markdown text-xl max-w-[90ch] pl-12 pt-4 pb-24">{@html contents}</div>
+	<div class="absolute top-[23px] left-[5px]">
+		<ChevronRight />
+	</div>
 {:else}
-    <pre class="pl-2 pt-5 pb-24 min-h-full max-w-full break-words whitespace-pre-line overflow-x-auto" bind:this={codeRef} on:dblclick={() => selectAll()} ><code>{@html contents}</code></pre>
+    <pre class="pl-2 pt-4 pb-24 min-h-full max-w-full break-words whitespace-pre-line overflow-x-auto" bind:this={codeRef} on:dblclick={() => selectAll()} ><code>{@html contents}</code></pre>
 {/if}
 
 <div class="fixed bottom-0 right-0 w-full md:w-auto">
