@@ -4,17 +4,29 @@ import { error, json, type RequestHandler } from "@sveltejs/kit";
 import { generate } from 'random-words';
 import { pastes } from "$db/index";
 import { SITE_URL } from "$env/static/private";
+import { extensionMap } from "$utils/languages";
 
 export const POST: RequestHandler = async ({ request }) => {
-    const { contents, encrypt, password, burnAfterReading } = await request.json();
+    const { contents, language, encrypt, password, burnAfterReading } = await request.json();
     const id = generate({ exactly: 3, join: '-' });
 
     if (!contents || contents.length === 0) {
         throw error(400, 'No contents provided');
     }
 
+    if (language && language.length > 0) {
+        // Check the language names, as well as the extensions for each language.
+        // Try to make it as efficient as possible.
+        const lang = language.toLowerCase();
+        const languages = Object.keys(extensionMap);
+        const extensions = Object.values(extensionMap).flat();
+        if (!languages.includes(lang) && !extensions.includes(lang)) {
+            throw error(400, 'Invalid language');
+        }
+    }
+
     let pasteContents: string = contents;
-    const highlight = detectLanguage(contents) || 'txt';
+    const highlight = language || detectLanguage(contents) || 'txt';
     
     if (encrypt && !password) {
         throw error(400, 'No password provided for encryption.');
@@ -31,6 +43,8 @@ export const POST: RequestHandler = async ({ request }) => {
         burnAfterReading: !!burnAfterReading,
         createdAt: new Date(),
     };
+
+    console.log(data);
 
     const res = await pastes.insertOne(data);
 

@@ -4,7 +4,7 @@ import { extensionMap, languages } from './languages';
 // Theme
 import 'highlight.js/styles/github-dark.css';
 
-const autoLanguages = ['js', 'ts', 'css', 'html', 'json', 'md', 'php', 'py', 'rb', 'rs', 'shell'];
+const autoLanguages = ['js', 'ts', 'css', 'go', 'html', 'json', 'md', 'php', 'py', 'rb', 'rs', 'bash'];
 
 for (const [lang, exts] of Object.entries(extensionMap)) {
 	if (exts.length > 0) {

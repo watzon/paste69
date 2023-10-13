@@ -1,23 +1,38 @@
 <script lang="ts">
-    import { Copy, DeviceFloppy, Moon, Sun, TextPlus } from 'svelte-tabler';
+    import { ChevronDown, ChevronRight, ChevronUp, Copy, DeviceFloppy, Moon, Sun, TextPlus } from 'svelte-tabler';
     import { storeHighlightJs } from '@skeletonlabs/skeleton';
     import { CodeBlock } from '@skeletonlabs/skeleton';
     import ToolBox from '$lib/components/ToolBox.svelte';
     import hljs from '$utils/hljs';
+	import { extensionMap } from '$utils/languages';
 	import { goto } from '$app/navigation';
 
     storeHighlightJs.set(hljs);
+
+	let showLanguages = false;
+
+	const toggleLanguages = () => {
+		showLanguages = !showLanguages;
+	};
+
+	// Split languages into four columns.
+	const languages = Object.entries(extensionMap).reduce((acc, [language, extensions], i) => {
+		const column = Math.floor(i / Math.ceil(Object.entries(extensionMap).length / 5));
+		acc[column] = acc[column] || [] as { language: string, extensions: string[] }[];
+		acc[column].push({ language, extensions: extensions.map(ext => `.${ext}`) });
+		return acc;
+	}, [] as { language: string, extensions: string[] }[][]);
 </script>
 
 <svelte:head>
     <title>Paste69 - About</title>
 </svelte:head>
 
-<div class="fixed bottom-0 right-0 w-full md:w-auto">
-	<ToolBox disableSave={true} disableCopy={true} on:new={() => goto('/')} />
+<div class="absolute top-[23px] left-[5px]">
+	<ChevronRight />
 </div>
 
-<div class="pl-2 pr-2 max-w-[100ch] pb-24">
+<div class="pl-12 pt-4 pb-24 max-w-[100ch]">
 	<h1 class="h1 mb-2">Paste69</h1>
 
 	<p class="mb-4 mt-4">
@@ -29,8 +44,35 @@
 
 	<p class="mb-4 mt-4">
 		Code highlighting is handled with the help of <a class="underline hover:text-gray-300" href="https://highlightjs.org/">highlight.js</a>.
-		So if you have any issues with language detection or missing languages, take it up with them.
+		So if you have any issues with language detection or missing languages, take it up with them. Available languages (with their
+		extensions) are as follows:
+		<button
+			class="inline-block ml-2 px-2"
+			on:click={toggleLanguages}
+		>
+			{showLanguages ? 'Hide' : 'Show'} Languages
+			{#if showLanguages}
+				<ChevronUp class="inline-block w-4 h-4" />
+			{:else}
+				<ChevronDown class="inline-block w-4 h-4" />
+			{/if}
+	</button>
 	</p>
+
+	{#if showLanguages}
+		<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4">
+			{#each languages as column}
+				<div>
+					{#each column as { language, extensions }}
+						<div class="mb-2">
+							<span class="font-bold">{language}</span>
+							<span class="text-gray-400"> ({extensions.join(', ')})</span>
+						</div>
+					{/each}
+				</div>
+			{/each}
+		</div>
+	{/if}
 
 	<h2 id="usage" class="h2 mt-4 mb-2"><a class="underline hover:text-gray-300" href="#usage">Usage</a></h2>
 
@@ -52,28 +94,31 @@
 
 	<p class="mb-4 mt-4">
 		To make it easier to create pastes, a CLI script is available. The script can be found <a
-			href="/paste69.sh">here</a
+		class="underline hover:text-gray-300" href="/paste69.sh">here</a
 		>. To use the script:
 	</p>
 
-	<CodeBlock language="bash" code={`$ curl -O https://0x45.st/paste69.sh && chmod +x paste69.sh<br />
-$ ./paste69.sh --help<br /><br />
+	<CodeBlock language="bash" code={`curl -O https://0x45.st/paste69.sh && chmod +x paste69.sh
+./paste69.sh --help
 
-Paste69 CLI script<br /><br />
-
-Usage:<br />
-paste69 &lt;file&gt; [options]<br />
-cat &lt;file&gt; | paste69 [options]<br /><br />
-
-Options:<br />
--h, --help                 Show this help text<br />
--r, --raw                  Return the raw JSON response<br />
--c, --copy                 Copy the paste URL to the clipboard<br />`}></CodeBlock>
+# Paste69 CLI script
+# 
+# Usage:
+#   paste69 <file> [options]
+#   cat <file> | paste69 [options]
+# 
+# Options:
+#   -h, --help                 Show this help text.
+#   -l, --language <language>  Set the language of the paste.
+#   -p, --password <password>  Set a password for the paste. This enables encryption.
+#   -x, --burn                 Burn the paste after it is viewed once.
+#   -r, --raw                  Return the raw JSON response.
+#   -c, --copy                 Copy the paste URL to the clipboard.`}></CodeBlock>
 
 	<p class="mb-4 mt-4">To create a paste with the script, simply pipe the contents of a file to the script:</p>
 
-    <CodeBlock language="bash" code={`$ cat file.md | ./paste69.sh<br />
-https://0x45.st/some-random-id.md`}></CodeBlock>
+    <CodeBlock language="bash" code={`cat file.md | ./paste69.sh
+# https://0x45.st/some-random-id.md`}></CodeBlock>
 
 	<h2 id="api" class="h2 mt-4 mb-2"><a class="underline hover:text-gray-300" href="#api">API</a></h2>
 
@@ -89,14 +134,23 @@ https://0x45.st/some-random-id.md`}></CodeBlock>
 		with the following JSON body:
 	</p>
 
-    <CodeBlock language="json" code={`{ "contents": "paste contents" }`}></CodeBlock>
+    <CodeBlock language="json" code={`{
+	"contents": "paste contents",
+	"language": "txt",
+	"encrypt": false,
+	"password": "",
+	"burnAfterReading": false,
+}`}></CodeBlock>
 
 	<p class="mb-4 mt-4">If the paste was successfully created, the API will respond with the following JSON:</p>
 
     <CodeBlock language="json" code={`{
     "id": "paste id",
+	"url": "https://0x45.st/some-random-id.md",
     "contents": "paste contents",
     "highlight": "txt",
+	"encrypted": false,
+	"burnAfterReading": false,
     "created_at": "2021-08-05T07:30:00.000Z",
 }`}></CodeBlock>
 
@@ -111,8 +165,15 @@ https://0x45.st/some-random-id.md`}></CodeBlock>
 
     <CodeBlock language="json" code={`{
     "id": "paste id",
+	"url": "https://0x45.st/some-random-id.md",
     "contents": "paste contents",
     "highlight": "txt",
+	"encrypted": false,
+	"burnAfterReading": false,
     "created_at": "2021-08-05T07:30:00.000Z",
 }`}></CodeBlock>
+</div>
+
+<div class="fixed bottom-0 right-0 w-full md:w-auto">
+	<ToolBox disableSave={true} disableCopy={true} on:new={() => goto('/')} />
 </div>

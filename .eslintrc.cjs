@@ -26,5 +26,9 @@ module.exports = {
 				parser: '@typescript-eslint/parser'
 			}
 		}
-	]
+	],
+	rules: {
+		'ts-expect-error': 'allow-with-description',
+		'ts-ignore': 'allow-with-description'
+	}
 };
