@@ -44,8 +44,6 @@ export const POST: RequestHandler = async ({ request }) => {
         createdAt: new Date(),
     };
 
-    console.log(data);
-
     const res = await pastes.insertOne(data);
 
     if (!res.acknowledged) {
