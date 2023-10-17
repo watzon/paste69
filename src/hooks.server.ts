@@ -1,9 +1,9 @@
-import { SENTRY_DSN } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import * as Sentry from '@sentry/node';
 import type { HandleServerError } from '@sveltejs/kit';
 
 Sentry.init({
-	dsn: SENTRY_DSN,
+	dsn: env.SENTRY_DSN,
 });
 
 interface ServerError extends Error {

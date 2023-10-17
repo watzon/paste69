@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 import { pastes } from '$db/index';
-import { SITE_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export const load: PageLoad = async ({ params }) => {
     const paste = await pastes.findOne({ id: params.slug });
@@ -10,7 +10,7 @@ export const load: PageLoad = async ({ params }) => {
         throw error(404, 'Paste not found');
     }
 
-    const pasteUrl = `${SITE_URL}/${paste.id}.${paste.highlight}`;
+    const pasteUrl = `${env.SITE_URL}/${paste.id}.${paste.highlight}`;
 
     return {
         pasteUrl,

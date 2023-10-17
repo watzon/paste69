@@ -3,7 +3,7 @@ import { encrypt as doEncrypt } from "$utils/crypto";
 import { error, json, type RequestHandler } from "@sveltejs/kit";
 import { generate } from 'random-words';
 import { pastes } from "$db/index";
-import { SITE_URL } from "$env/static/private";
+import { env } from "$env/dynamic/private";
 import { extensionMap } from "$utils/languages";
 
 export const POST: RequestHandler = async ({ request }) => {
@@ -36,7 +36,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
     const data = {
         id,
-        url: `${SITE_URL}/${id}.${highlight}`,
+        url: `${env.SITE_URL}/${id}.${highlight}`,
         highlight,
         encrypted: !!encrypt,
         contents: pasteContents,

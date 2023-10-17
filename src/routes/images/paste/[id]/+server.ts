@@ -1,5 +1,5 @@
 import { pastes } from "$db/index";
-import { SITE_URL } from "$env/static/private";
+import { env } from "$env/dynamic/private";
 import { error, type RequestHandler } from "@sveltejs/kit";
 
 export const GET: RequestHandler = async ({ params }) => {
@@ -27,7 +27,7 @@ export const GET: RequestHandler = async ({ params }) => {
     // Truncate each line to 80 characters, and pad the rest with spaces.
     lines		= lines.map(line => line.slice(0, 70).padEnd(70, ' '));
 
-    const title	= `${SITE_URL}/${id}.${paste.highlight}`;
+    const title	= `${env.SITE_URL}/${id}.${paste.highlight}`;
     const url	= `https://inkify.0x45.st/generate?code=${encodeURIComponent(lines.join('\n'))}&window_title=${encodeURIComponent(title)}&language=${encodeURIComponent(paste.highlight)}&pad_horiz=5&pad_vert=5`;
 
     const res = await fetch(url);
