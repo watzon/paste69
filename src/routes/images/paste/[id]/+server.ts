@@ -1,10 +1,11 @@
-import { pastes } from "$db/index";
+import { Mongo } from "$lib/db/index";
 import { env } from "$env/dynamic/private";
 import { error, type RequestHandler } from "@sveltejs/kit";
 
 export const GET: RequestHandler = async ({ params }) => {
     const { id } = params;
 
+    const pastes = await Mongo.getNamedCollection("pastes");
     const paste = await pastes.findOne({ id });
 
     if (!paste) {

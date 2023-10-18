@@ -2,7 +2,7 @@ import { detectLanguage } from "$utils/hljs";
 import { encrypt as doEncrypt } from "$utils/crypto";
 import { error, json, type RequestHandler } from "@sveltejs/kit";
 import { generate } from 'random-words';
-import { pastes } from "$db/index";
+import { Mongo } from "$lib/db/index";
 import { env } from "$env/dynamic/private";
 import { extensionMap } from "$utils/languages";
 
@@ -44,6 +44,7 @@ export const POST: RequestHandler = async ({ request }) => {
         createdAt: new Date(),
     };
 
+    const pastes = await Mongo.getNamedCollection("pastes");
     const res = await pastes.insertOne(data);
 
     if (!res.acknowledged) {

@@ -1,10 +1,11 @@
-import { pastes } from "$db/index";
+import { Mongo } from "$lib/db/index";
 import { error, json, type RequestHandler } from "@sveltejs/kit";
 
 // Fetch the paste with the given ID, returning it as a JSON object.
 export const GET: RequestHandler = async ({ params }) => {
     const { id } = params;
 
+    const pastes = await Mongo.getNamedCollection("pastes");
     const paste = await pastes.findOne({ id });
 
     if (!paste) {

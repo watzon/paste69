@@ -5,19 +5,23 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 
-RUN npm ci --silent
+RUN npm ci
 
-COPY . ./
+COPY . .
 
 RUN npm run build
+RUN npm ci --prod
 
 # Serve the built project
 FROM node:20.7.0-alpine as serve
 
+USER node:node
+
 WORKDIR /app
 
-COPY --from=build /app/build .
-COPY --from=build /app/package.json .
-COPY --from=build /app/node_modules ./node_modules
+COPY --from=build --chown=node:node /app/build ./build
+COPY --from=build --chown=node:node /app/node_modules ./node_modules
 
-CMD ["node", "index.js"]
+COPY --chown=node:node package.json .
+
+ENTRYPOINT ["node", "build/index.js"]

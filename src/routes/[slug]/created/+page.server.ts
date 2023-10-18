@@ -1,9 +1,10 @@
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
-import { pastes } from '$db/index';
+import { Mongo } from '$lib/db/index';
 import { env } from '$env/dynamic/private';
 
 export const load: PageLoad = async ({ params }) => {
+    const pastes = await Mongo.getNamedCollection('pastes');
     const paste = await pastes.findOne({ id: params.slug });
 
     if (!paste) {

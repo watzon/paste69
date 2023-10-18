@@ -1,4 +1,4 @@
-import { pastes } from "$db/index";
+import { Mongo } from "$lib/db/index";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ url }) => {
@@ -7,6 +7,7 @@ export const load: PageServerLoad = async ({ url }) => {
     if (copyFrom) {
         // If it is, we need to fetch the paste from the database
         // and return it to the client.
+        const pastes = await Mongo.getNamedCollection("pastes");
         const paste = await pastes.findOne({ id: copyFrom });
         return {
             paste: structuredClone(paste),

@@ -1,5 +1,5 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
-import { pastes } from "$db/index";
+import { Mongo } from "$lib/db/index";
 import { decrypt } from "$utils/crypto";
 
 // Decrypt the paste with the given ID using the provided password.
@@ -7,6 +7,7 @@ export const POST: RequestHandler = async ({ params, request }) => {
     const { id } = params;
     const { password } = await request.json();
 
+    const pastes = await Mongo.getNamedCollection("pastes");
     const paste = await pastes.findOne({ id });
 
     if (!paste) {
