@@ -20,9 +20,28 @@ export const load: PageServerLoad = async () => {
     // Total pastes with burnAfterReading enabled (and not yet read)
     const totalBurnAfterReadingPastes = await pastes.countDocuments({ burnAfterReading: true });
 
+    // Average paste size
+    const averageContentSize = await pastes.aggregate([
+        {
+            $match: {
+                contents: { $exists: true, $ne: null },
+            },
+        },
+        {
+            $group: {
+                _id: null,
+                averageSize: { $avg: { $strLenBytes: "$contents" } },
+            },
+        },
+    ]).toArray();
+
+    // Round the average size to 2 decimal places
+    const averageContentSizeRounded = Math.round(averageContentSize[0]?.averageSize * 100) / 100;
+
     return {
         totalPastes,
         totalEncryptedPastes,
         totalBurnAfterReadingPastes,
+        averagePasteSize: averageContentSizeRounded,
     };
 }

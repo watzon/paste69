@@ -1,10 +1,11 @@
 <script lang="ts">
     import type { PageData } from './$types';
+    import { goto } from '$app/navigation';
 	import ToolBox from "$lib/components/ToolBox.svelte";
 	import { ChevronRight } from "svelte-tabler";
 
     export let data: PageData;
-    const { totalPastes, totalEncryptedPastes, totalBurnAfterReadingPastes } = data;
+    const { totalPastes, totalEncryptedPastes, totalBurnAfterReadingPastes, averagePasteSize } = data;
 </script>
 
 <svelte:head>
@@ -29,11 +30,16 @@
     <p class="mb-4">
         <span class="font-bold">Total burn after reading pastes (unread):</span> {totalBurnAfterReadingPastes}
     </p>
+
+    <p class="mb-4">
+        <span class="font-bold">Average paste size:</span> {averagePasteSize} bytes
+    </p>
 </div>
 
 <div class="fixed bottom-0 right-0 w-full md:w-auto">
     <ToolBox
         disableSave={true}
         disableCopy={true}
+        on:new={() => goto('/')}
     />
 </div>

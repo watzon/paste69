@@ -49,13 +49,13 @@
 	<div class="flex flex-col items-center justify-center pt-4 pb-2 px-12 w-full">
 		<div class="flex flex-row justify-between gap-2 w-full">
 			<Button title="Save" disabled={disableSave} on:click={onSave}>
-				<DeviceFloppy />
+				<DeviceFloppy size="22" />
 			</Button>
 			<Button title="New" on:click={onNew}>
-				<TextPlus />
+				<TextPlus size="22" />
 			</Button>
 			<Button title="Copy" disabled={disableCopy} on:click={onCopy}>
-				<Copy />
+				<Copy size="22" />
 			</Button>
 		</div>
 		<!-- More options button with horizontal line through the word -->

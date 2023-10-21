@@ -38,7 +38,7 @@
             {#if formData.encrypt}
 			<div class="grid grid-cols-3">
 				<div class="col-span-1">Password</div>
-				<input class="input col-span-2 px-2 py-1" type="password" bind:value={formData.password} placeholder="Encryption password..." />
+				<input class="input col-span-2" type="password" bind:value={formData.password} placeholder="Encryption password..." />
 			</div>
             {/if}
             <div class="grid grid-cols-3">
