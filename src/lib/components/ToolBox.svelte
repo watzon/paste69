@@ -41,7 +41,7 @@
 <div class="flex flex-row max-w-full md:min-w-[595px] bg-slate-800">
 	<a
 		href="/about"
-		class="flex flex-col items-center justify-center py-2 px-8 bg-black bg-opacity-50"
+		class="flex flex-col items-center justify-center py-2 px-8 bg-gray-900 bg-opacity-50"
 	>
 		<img class="w-8" src={logo} alt="Paste69 Logo" />
 	</a>

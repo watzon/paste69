@@ -2,7 +2,7 @@
     import { createEventDispatcher } from 'svelte';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import type { ModalSettings } from '@skeletonlabs/skeleton';
-	import { BrandFacebookFilled, BrandMastodon, BrandMessenger, BrandTelegram, BrandTwitterFilled, BrandWhatsapp, ClipboardCopy, Copy } from "svelte-tabler";
+	import { BrandFacebook, BrandMastodon, BrandMessenger, BrandTelegram, BrandTwitter, BrandWhatsapp, ClipboardCopy, Copy } from "svelte-tabler";
 
     export let pasteUrl: string;
     export let shareMessage: string = 'Check out this paste on Paste69: {url}'
@@ -42,7 +42,7 @@
     <div class="flex flex-col items-center gap-4">
         <!-- Twitter Share Button -->
         <a
-            class="p-2 bg-[#1DA1F2] rounded w-min"
+            class="p-2 bg-gray-900 rounded w-min"
             href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
                 shareMessage
             )}`}
@@ -50,12 +50,12 @@
             rel="noopener noreferrer"
             title="Share on Twitter"
         >
-            <BrandTwitterFilled size="32" />
+            <BrandTwitter size="28" />
         </a>
 
         <!-- Facebook Share Button -->
         <a
-            class="p-2 bg-[#1877F2] rounded w-min"
+            class="p-2 bg-gray-900 rounded w-min"
             href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
                 pasteUrl
             )}`}
@@ -63,12 +63,12 @@
             rel="noopener noreferrer"
             title="Share on Facebook"
         >
-            <BrandFacebookFilled size="32" />
+            <BrandFacebook size="28" />
         </a>
 
         <!-- Messenger Share Button -->
         <a
-            class="p-2 bg-gradient-to-tr from-[#0a92fc] to-[#fe6a65] rounded w-min"
+            class="p-2 bg-gray-900 rounded w-min"
             href={`https://www.facebook.com/dialog/send?app_id=521270401588372&link=${encodeURIComponent(
                 pasteUrl
             )}&redirect_uri=${encodeURIComponent(
@@ -78,12 +78,12 @@
             rel="noopener noreferrer"
             title="Share on Messenger"
         >
-            <BrandMessenger size="32" />
+            <BrandMessenger size="28" />
         </a>
 
         <!-- Whatsapp Share Button -->
         <a
-            class="p-2 bg-[#189d0e] rounded w-min"
+            class="p-2 bg-gray-900 rounded w-min"
             href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
                 shareMessage
             )}`}
@@ -91,12 +91,12 @@
             rel="noopener noreferrer"
             title="Share on Whatsapp"
         >
-            <BrandWhatsapp size="32" />
+            <BrandWhatsapp size="28" />
         </a>
 
         <!-- Telegram Share Button -->
         <a
-            class="p-2 bg-[#3da8e5] rounded w-min"
+            class="p-2 bg-gray-900 rounded w-min"
             href={`https://telegram.me/share/url?url=${encodeURIComponent(
                 pasteUrl
             )}&text=${encodeURIComponent(shareMessage)}`}
@@ -104,34 +104,34 @@
             rel="noopener noreferrer"
             title="Share on Telegram"
         >
-            <BrandTelegram size="32" />
+            <BrandTelegram size="28" />
         </a>
 
         <!-- Mastodon Share Button -->
         <button
-            class="p-2 bg-[#2b8fda] rounded w-min"
+            class="p-2 bg-gray-900 rounded w-min"
             title="Share on Mastodon"
             on:click={shareOnMastodon}
         >
-            <BrandMastodon size="32" />
+            <BrandMastodon size="28" />
         </button>
 
         <!-- Copy URL Button -->
         <button
-            class="p-2 bg-teal-500 rounded w-min"
+            class="p-2 bg-gray-900 rounded w-min"
             title="Copy URL"
             on:click={copyUrl}
         >
-            <Copy size="32" />
+            <Copy size="28" />
         </button>
 
         <!-- Copy content button -->
         <button
-            class="p-2 bg-pink-700 rounded w-min"
+            class="p-2 bg-gray-900 rounded w-min"
             title="Copy content"
             on:click={() => dispatch('copy')}
         >
-            <ClipboardCopy size="32" />
+            <ClipboardCopy size="28" />
         </button>
     </div>
 </div>
