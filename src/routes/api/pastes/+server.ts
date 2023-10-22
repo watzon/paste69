@@ -28,18 +28,26 @@ const isTrue = (value: string | boolean | undefined): boolean => {
 // Extract the options from the form data.
 const extractOptionsFromForm = async (req: Request): Promise<PasteOptions> => {
     const form = await req.formData();
-    const contents = form.get('contents') as string;
+    const contents = form.get('contents');
     const language = form.get('language') as string;
     const password = form.get('password') as string;
     const burnAfterReading = form.get('burnAfterReading') as string;
     const raw = form.get('raw') as string;
 
-    if (!contents || contents.length === 0) {
+    let text: string;
+    // Check if contents is a file, if so read it.
+    if (contents instanceof File) {
+        text = await contents.text();
+    } else {
+        text = contents as string;
+    }
+
+    if (!text || text.length === 0) {
         throw error(400, 'No contents provided for your paste.')
     }
 
     return {
-        contents,
+        contents: text,
         language,
         password,
         burnAfterReading: isTrue(burnAfterReading),
@@ -50,7 +58,6 @@ const extractOptionsFromForm = async (req: Request): Promise<PasteOptions> => {
 // Extract the options from the JSON body.
 const extractOptionsFromJSON = async (req: Request): Promise<PasteOptions> => {
     const { contents, language, password, burnAfterReading, raw } = await req.json();
-    console.log(contents, language, password, burnAfterReading, raw);
 
     if (!contents || contents.length === 0) {
         throw error(400, 'No contents provided for your paste.')
@@ -70,9 +77,7 @@ const extractOptionsFromQuery = async (req: Request): Promise<PasteOptions> => {
     const url = new URL(req.url);
     const query = url.searchParams;
     
-    const reader = req.body?.getReader();
-    const body = await reader?.read();
-    const contents = body?.value?.toString();
+    const contents = await req.text();
 
     if (!contents) {
         throw error(400, 'No contents provided for your paste.')
@@ -152,6 +157,6 @@ export const POST: RequestHandler = async ({ request }) => {
             status: 201,
         });
     } else {
-        return text(data.url);
+        return text(data.url + '\n');
     }
 };

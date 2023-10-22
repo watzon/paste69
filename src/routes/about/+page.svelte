@@ -168,11 +168,28 @@
 
 	<h4 class="h4 mt-4 mb-2">Examples</h4>
 
-    <code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">curl -X POST -H "Content-Type: application/json" -d '{'{'}"contents": "paste contents"{'}'}' https://0x45.st/api/pastes</code>
+	<pre class="bg-gray-900 py-4 px-4 mb-2 block rounded-lg whitespace-normal">
+		<div class="text-sm font-medium text-gray-500 mb-2">JSON Request</div>
+		<code class="whitespace-normal">
+			$ curl -X POST -H "Content-Type: application/json" -d '{'{'}"contents": "paste contents"{'}'}' https://0x45.st/api/pastes
+		</code>
+	</pre>
 
-	<code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">curl -X POST -F "contents=paste contents" https://0x45.st/api/pastes</code>
-	
-	<code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">curl -X POST -d "paste contents" https://0x45.st/api/pastes</code>
+	<pre class="bg-gray-900 py-4 px-4 mb-2 block rounded-lg  whitespace-normal">
+		<div class="text-sm font-medium text-gray-500 mb-2">Form Request</div>
+		<code class="whitespace-normal">
+			$ curl -X POST -F "contents=paste contents" https://0x45.st/api/pastes<br />
+			# or, with a file<br />
+			$ curl -X POST -F "contents=@file-name.txt" https://0x45.st/api/pastes
+		</code>
+	</pre>
+
+	<pre class="bg-gray-900 py-4 px-4 mb-2 block rounded-lg  whitespace-normal">
+		<div class="text-sm font-medium text-gray-500 mb-2">Plaintext Request</div>
+		<code class="whitespace-normal">
+			$ curl -X POST -H "Content-Type: text/plain" -d "paste contents" https://0x45.st/api/pastes
+		</code>
+	</pre>
 
 	<p class="mb-4 mt-4">If the paste was successfully created, the API will respond with the following JSON:</p>
 
