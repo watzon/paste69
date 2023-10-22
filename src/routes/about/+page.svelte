@@ -35,14 +35,14 @@
 <div class="pl-12 pt-4 pb-24 max-w-[100ch]">
 	<h1 class="h1 mb-2">Paste69</h1>
 
-	<p class="mb-4 mt-4">
+	<p class="mb-6 mt-6">
 		Paste69 is a pastebin service built with
 		<a class="underline hover:text-gray-300" href="https://kit.svelte.dev">SvelteKit</a>. It's a simple, fast, and easy to use pastebin
 		service based on HasteBin. Like HasteBin, it's also open source and can be found over on
 		<a class="underline hover:text-gray-300" href="https://github.com/watzon/paste69">GitHub</a>.
 	</p>
 
-	<p class="mb-4 mt-4">
+	<p class="mb-6 mt-6">
 		Code highlighting is handled with the help of <a class="underline hover:text-gray-300" href="https://highlightjs.org/">highlight.js</a>.
 		So if you have any issues with language detection or missing languages, take it up with them. Available languages (with their
 		extensions) are as follows:
@@ -74,9 +74,9 @@
 		</div>
 	{/if}
 
-	<h2 id="usage" class="h2 mt-4 mb-2"><a class="underline hover:text-gray-300" href="#usage">Usage</a></h2>
+	<h2 id="usage" class="h2 mt-12 mb-2"><a class="underline hover:text-gray-300" href="#usage">Usage</a></h2>
 
-	<p class="mb-4 mt-4">
+	<p class="mb-6 mt-6">
 		To create a paste, go <a class="underline hover:text-gray-300" href="/">home</a> or click the "New" button (<TextPlus
 			class="inline-block w-4 h-4"
 		/>) in the tool box in the bottom right corner of the page. Paste whatever text you want into
@@ -84,15 +84,15 @@
 		create the paste.
 	</p>
 
-	<p class="mb-4 mt-4">
+	<p class="mb-6 mt-6">
 		To copy an existing paste, click the "Copy" button (<Copy class="inline-block w-4 h-4" />)
 		in the tool box in the bottom right corner of the page. This will start a new paste with the
 		contents of the existing paste.
 	</p>
 
-	<h2 id="cli-script" class="h2 mt-4 mb-2"><a class="underline hover:text-gray-300" href="#cli-script">CLI Script</a></h2>
+	<h2 id="cli-script" class="h2 mt-12 mb-2"><a class="underline hover:text-gray-300" href="#cli-script">CLI Script</a></h2>
 
-	<p class="mb-4 mt-4">
+	<p class="mb-6 mt-6">
 		To make it easier to create pastes, a CLI script is available. The script can be found <a
 		class="underline hover:text-gray-300" href="/paste69.sh">here</a
 		>. To use the script:
@@ -115,14 +115,14 @@
 #   -r, --raw                  Return the raw JSON response.
 #   -c, --copy                 Copy the paste URL to the clipboard.</code></pre>
 
-	<p class="mb-4 mt-4">To create a paste with the script, simply pipe the contents of a file to the script:</p>
+	<p class="mb-6 mt-6">To create a paste with the script, simply pipe the contents of a file to the script:</p>
 
     <code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">cat file.md | ./paste69.sh
 # https://0x45.st/some-random-id.md</code>
 
-	<h2 id="api" class="h2 mt-4 mb-2"><a class="underline hover:text-gray-300" href="#api">API</a></h2>
+	<h2 id="api" class="h2 mt-12 mb-2"><a class="underline hover:text-gray-300" href="#api">API</a></h2>
 
-	<p class="mb-4 mt-4">
+	<p class="mb-6 mt-6">
 		Paste69 has a simple API for creating and fetching pastes. The API accepts JSON, form data, and plain text with
 		query parameters. The API will respond with JSON or plain text, depenant on the state of the `raw`
 		parameter.
@@ -141,11 +141,11 @@
         </div>
     </aside>
 
-	<h3 id="api-creating-a-paste" class="h3 mt-4 mb-2">
+	<h3 id="api-creating-a-paste" class="h3 mt-8 mb-2">
 		<a class="underline hover:text-gray-300" href="#api-creating-a-paste">Creating a Paste</a>
 	</h3>
 
-	<p class="mb-4 mt-4">
+	<p class="mb-6 mt-6">
 		To create a paste, send a POST request to <code>/api/pastes</code>. Valid parameters are as follows:
 	</p>
 
@@ -166,7 +166,7 @@
 		</li>
 	</ul>
 
-	<h4 class="h4 mt-4 mb-2">Examples</h4>
+	<h4 class="h4 mt-8 mb-2">Examples</h4>
 
 	<pre class="bg-gray-900 py-4 px-4 mb-2 block rounded-lg whitespace-normal">
 		<div class="text-sm font-medium text-gray-500 mb-2">JSON Request</div>
@@ -191,7 +191,7 @@
 		</code>
 	</pre>
 
-	<p class="mb-4 mt-4">If the paste was successfully created, the API will respond with the following JSON:</p>
+	<p class="mb-6 mt-6">If the paste was successfully created, the API will respond with the following JSON:</p>
 
     <pre class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg"><code class="language-json">{'{'}
 	"id": "paste id",
@@ -207,7 +207,7 @@
 		<a class="underline hover:text-gray-300" href="#api-fetching-a-paste">Fetching a Paste</a>
 	</h3>
 
-	<p class="mb-4 mt-4">
+	<p class="mb-6 mt-6">
 		To fetch a paste, send a GET request to{' '}
 		<code>/api/pastes/:id</code>. If the paste exists, the API will respond with the following JSON:
 	</p>
