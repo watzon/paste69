@@ -15,7 +15,7 @@
         type: 'prompt',
         // Data
         title: 'Mastodon instance URL',
-        valueAttr: { type: 'text', required: true, placeholder: 'https://mastodon.social' },
+        valueAttr: { type: 'text', placeholder: 'https://mastodon.social' },
         // Returns the updated response value
         response: (r: string) => {
             // Strip everything but the host and tld
