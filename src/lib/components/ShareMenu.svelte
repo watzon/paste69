@@ -13,12 +13,10 @@
 
     const mastodonUrlModal: ModalSettings = {
         type: 'prompt',
-        // Data
         title: 'Mastodon instance URL',
-        valueAttr: { type: 'text', placeholder: 'https://mastodon.social' },
-        // Returns the updated response value
-        response: (r: string) => {
-            // Strip everything but the host and tld
+        valueAttr: { type: 'text', required: true, placeholder: 'https://mastodon.social' },
+        response: (r: string | false) => {
+            if (!r) return;
             const url = new URL(r);
             const host = url.host;
             window.open(`https://${host}/share?text=${encodeURIComponent(shareMessage)}`, '_blank');
