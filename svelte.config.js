@@ -16,6 +16,10 @@ const config = {
 		alias: {
 			'$db/*': './src/lib/db/*',
 			'$utils/*': './src/utils/*',
+		},
+
+		csrf: {
+			checkOrigin: false,
 		}
 	}
 };

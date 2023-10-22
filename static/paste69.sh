@@ -53,6 +53,7 @@ function show_help {
 
 burn=false
 encrypt=false
+raw=false
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do
@@ -134,7 +135,8 @@ json=$(jq -n \
   --arg password "$password" \
   --argjson encrypt $encrypt \
   --argjson burn $burn \
-  '{"contents": $contents, "extension": $extension, "language": $language, "password": $password, "encrypt": $encrypt, "burnAfterReading": $burn}')
+  --argjson raw $raw \
+  '{"contents": $contents, "extension": $extension, "language": $language, "password": $password, "encrypt": $encrypt, "burnAfterReading": $burn, "raw": $raw}')
 
 response=$(
   curl -s -X POST $url \
@@ -148,23 +150,19 @@ if [ $? -ne 0 ]; then
 fi
 
 # Check if there is an error
-error=$(echo $response | jq -r '.error')
-if [ "$error" != "null" ]; then
+error=$(echo "$response" | jq -r '.message' 2>/dev/null || true)
+if [ -n "$error" ] && [ "$error" != "null" ]; then
   echo "Error: $error"
   exit 1
 fi
 
-# If raw is set, return the raw JSON response
-if [ ! -z "$raw" ]; then
+paste_url=$response
+if [ "$raw" = true ]; then
+  paste_url=$(echo $response | jq -r '.url')
   echo $response
-  exit 0
+else
+  echo $paste_url
 fi
-
-# Get the paste URL from the response
-paste_url=$(echo $response | jq -r '.url')
-
-# Print the paste URL
-echo $paste_url
 
 # If copy is set, copy the paste URL to the clipboard
 if [ ! -z "$copy" ]; then

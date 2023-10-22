@@ -1,13 +1,111 @@
 import { detectLanguage } from "$utils/hljs";
 import { encrypt as doEncrypt } from "$utils/crypto";
-import { error, json, type RequestHandler } from "@sveltejs/kit";
+import { error, json, text, type RequestHandler } from "@sveltejs/kit";
 import { generate } from 'random-words';
 import { Mongo } from "$lib/db/index";
 import { env } from "$env/dynamic/private";
 import { extensionMap } from "$utils/languages";
 
+interface PasteOptions {
+    contents?: string;
+    language?: string;
+    encrypt?: boolean;
+    password?: string;
+    burnAfterReading?: boolean;
+    raw?: boolean;
+}
+
+const isTrue = (value: string | boolean | undefined): boolean => {
+    if (typeof value === 'boolean') {
+        return value;
+    } else if (typeof value === 'string') {
+        return ['true', '1', 'yes', 'y', 'on'].includes(value.toLowerCase());
+    } else {
+        return false;
+    }
+}
+
+// Extract the options from the form data.
+const extractOptionsFromForm = async (req: Request): Promise<PasteOptions> => {
+    const form = await req.formData();
+    const contents = form.get('contents') as string;
+    const language = form.get('language') as string;
+    const password = form.get('password') as string;
+    const burnAfterReading = form.get('burnAfterReading') as string;
+    const raw = form.get('raw') as string;
+
+    if (!contents || contents.length === 0) {
+        throw error(400, 'No contents provided for your paste.')
+    }
+
+    return {
+        contents,
+        language,
+        password,
+        burnAfterReading: isTrue(burnAfterReading),
+        raw: isTrue(raw),
+    };
+};
+
+// Extract the options from the JSON body.
+const extractOptionsFromJSON = async (req: Request): Promise<PasteOptions> => {
+    const { contents, language, password, burnAfterReading, raw } = await req.json();
+    console.log(contents, language, password, burnAfterReading, raw);
+
+    if (!contents || contents.length === 0) {
+        throw error(400, 'No contents provided for your paste.')
+    }
+
+    return {
+        contents,
+        language,
+        password,
+        burnAfterReading: isTrue(burnAfterReading),
+        raw: isTrue(raw),
+    };
+};
+
+// Extract the options from the query string, and body.
+const extractOptionsFromQuery = async (req: Request): Promise<PasteOptions> => {
+    const url = new URL(req.url);
+    const query = url.searchParams;
+    
+    const reader = req.body?.getReader();
+    const body = await reader?.read();
+    const contents = body?.value?.toString();
+
+    if (!contents) {
+        throw error(400, 'No contents provided for your paste.')
+    }
+    
+    const language = query.get('language') as string;
+    const password = query.get('password') as string;
+    const burnAfterReading = query.get('burnAfterReading') as string;
+    const raw = query.get('raw') as string;
+
+    return {
+        contents,
+        language,
+        password,
+        burnAfterReading: isTrue(burnAfterReading),
+        raw: isTrue(raw),
+    };
+};
+
+// Extract the options from the request, depending on the content type.
+const extractOptions = async (req: Request): Promise<PasteOptions> => {
+    const contentType = req.headers.get('content-type') || '';
+    if (contentType.includes('form')) {
+        return await extractOptionsFromForm(req);
+    } else if (contentType.includes('json')) {
+        return await extractOptionsFromJSON(req);
+    } else {
+        return await extractOptionsFromQuery(req);
+    }
+};
+
 export const POST: RequestHandler = async ({ request }) => {
-    const { contents, language, encrypt, password, burnAfterReading } = await request.json();
+    const { contents, language, password, burnAfterReading, raw } = await extractOptions(request);
     const id = generate({ exactly: 3, join: '-' });
 
     if (!contents || contents.length === 0) {
@@ -28,9 +126,7 @@ export const POST: RequestHandler = async ({ request }) => {
     let pasteContents: string = contents;
     const highlight = language || detectLanguage(contents) || 'txt';
     
-    if (encrypt && !password) {
-        throw error(400, 'No password provided for encryption.');
-    } else if (encrypt) {
+    if (password) {
         pasteContents = await doEncrypt(contents, password);
     }
 
@@ -38,7 +134,7 @@ export const POST: RequestHandler = async ({ request }) => {
         id,
         url: `${env.SITE_URL}/${id}.${highlight}`,
         highlight,
-        encrypted: !!encrypt,
+        encrypted: !!password,
         contents: pasteContents,
         burnAfterReading: !!burnAfterReading,
         createdAt: new Date(),
@@ -51,7 +147,11 @@ export const POST: RequestHandler = async ({ request }) => {
         throw error(500, 'Failed to create paste');
     }
 
-    return json(data, {
-        status: 201,
-    })
+    if (raw) {
+        return json(data, {
+            status: 201,
+        });
+    } else {
+        return text(data.url);
+    }
 };

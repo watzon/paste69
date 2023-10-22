@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ChevronDown, ChevronRight, ChevronUp, Copy, DeviceFloppy, Moon, Sun, TextPlus } from 'svelte-tabler';
+    import { ChevronDown, ChevronRight, ChevronUp, Copy, DeviceFloppy, InfoCircleFilled, Moon, Sun, TextPlus } from 'svelte-tabler';
     import { storeHighlightJs } from '@skeletonlabs/skeleton';
     import { CodeBlock } from '@skeletonlabs/skeleton';
     import ToolBox from '$lib/components/ToolBox.svelte';
@@ -98,7 +98,7 @@
 		>. To use the script:
 	</p>
 
-	<CodeBlock language="bash" code={`curl -O https://0x45.st/paste69.sh && chmod +x paste69.sh
+	<pre class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg"><code class="language-bash">curl -O https://0x45.st/paste69.sh && chmod +x paste69.sh
 ./paste69.sh --help
 
 # Paste69 CLI script
@@ -113,46 +113,78 @@
 #   -p, --password <password>  Set a password for the paste. This enables encryption.
 #   -x, --burn                 Burn the paste after it is viewed once.
 #   -r, --raw                  Return the raw JSON response.
-#   -c, --copy                 Copy the paste URL to the clipboard.`}></CodeBlock>
+#   -c, --copy                 Copy the paste URL to the clipboard.</code></pre>
 
 	<p class="mb-4 mt-4">To create a paste with the script, simply pipe the contents of a file to the script:</p>
 
-    <CodeBlock language="bash" code={`cat file.md | ./paste69.sh
-# https://0x45.st/some-random-id.md`}></CodeBlock>
+    <code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">cat file.md | ./paste69.sh
+# https://0x45.st/some-random-id.md</code>
 
 	<h2 id="api" class="h2 mt-4 mb-2"><a class="underline hover:text-gray-300" href="#api">API</a></h2>
 
-	<p class="mb-4 mt-4">Paste69 has a simple API for creating and fetching pastes. The API is documented below.</p>
+	<p class="mb-4 mt-4">
+		Paste69 has a simple API for creating and fetching pastes. The API accepts JSON, form data, and plain text with
+		query parameters. The API will respond with JSON or plain text, depenant on the state of the `raw`
+		parameter.
+	</p>
+
+	<aside class="alert variant-filled-tertiary my-6">
+        <!-- Icon -->
+        <div><InfoCircleFilled size="42" /></div>
+        <!-- Message -->
+        <div class="alert-message">
+            <h3 class="h3">Note</h3>
+            <p>
+				The below examples are offered as curl commands to make things simple, but you can use whatever tool you want to
+				make requests to the API.
+			</p>
+        </div>
+    </aside>
 
 	<h3 id="api-creating-a-paste" class="h3 mt-4 mb-2">
 		<a class="underline hover:text-gray-300" href="#api-creating-a-paste">Creating a Paste</a>
 	</h3>
 
 	<p class="mb-4 mt-4">
-		To create a paste, send a POST request to <code>/api/pastes</code>
-		{' '}
-		with the following JSON body:
+		To create a paste, send a POST request to <code>/api/pastes</code>. Valid parameters are as follows:
 	</p>
 
-    <CodeBlock language="json" code={`{
-	"contents": "paste contents",
-	"language": "txt",
-	"encrypt": false,
-	"password": "",
-	"burnAfterReading": false,
-}`}></CodeBlock>
+	<ul class="list-disc list-inside mb-4">
+		<li>
+			<code>contents</code> - The contents of the paste.
+		</li>
+		<li>
+			<code>language</code> - The language of the paste. This is used for syntax highlighting. If no language is specified, the
+			API will attempt to detect the language.
+		</li>
+		<li>
+			<code>password</code> - A password to encrypt the paste with. This will enable encryption.
+		</li>
+		<li>
+			<code>burnAfterReading</code> - A boolean value to enable burn after reading. If this is set to true, the paste will be deleted
+			after it is viewed once.
+		</li>
+	</ul>
+
+	<h4 class="h4 mt-4 mb-2">Examples</h4>
+
+    <code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">curl -X POST -H "Content-Type: application/json" -d '{'{'}"contents": "paste contents"{'}'}' https://0x45.st/api/pastes`}></code>
+
+	<code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">curl -X POST -F "contents=paste contents" https://0x45.st/api/pastes`}></code>
+	
+	<code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">curl -X POST -d "paste contents" https://0x45.st/api/pastes`}></code>
 
 	<p class="mb-4 mt-4">If the paste was successfully created, the API will respond with the following JSON:</p>
 
-    <CodeBlock language="json" code={`{
-    "id": "paste id",
+    <pre class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg"><code class="language-json">{'{'}
+	"id": "paste id",
 	"url": "https://0x45.st/some-random-id.md",
-    "contents": "paste contents",
-    "highlight": "txt",
+	"contents": "paste contents",
+	"highlight": "txt",
 	"encrypted": false,
 	"burnAfterReading": false,
-    "created_at": "2021-08-05T07:30:00.000Z",
-}`}></CodeBlock>
+	"created_at": "2021-08-05T07:30:00.000Z",
+{'}'}</code></pre>
 
 	<h3 id="api-fetching-a-paste" class="h3 mt-4 mb-2">
 		<a class="underline hover:text-gray-300" href="#api-fetching-a-paste">Fetching a Paste</a>
@@ -163,15 +195,15 @@
 		<code>/api/pastes/:id</code>. If the paste exists, the API will respond with the following JSON:
 	</p>
 
-    <CodeBlock language="json" code={`{
-    "id": "paste id",
+    <pre class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg"><code class="language-json">{'{'}
+	"id": "paste id",
 	"url": "https://0x45.st/some-random-id.md",
-    "contents": "paste contents",
-    "highlight": "txt",
+	"contents": "paste contents",
+	"highlight": "txt",
 	"encrypted": false,
 	"burnAfterReading": false,
-    "created_at": "2021-08-05T07:30:00.000Z",
-}`}></CodeBlock>
+	"created_at": "2021-08-05T07:30:00.000Z",
+{'}'}</code></pre>
 </div>
 
 <div class="fixed bottom-0 right-0 w-full md:w-auto">
