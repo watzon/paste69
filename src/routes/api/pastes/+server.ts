@@ -137,7 +137,6 @@ export const POST: RequestHandler = async ({ request }) => {
 
     const data = {
         id,
-        url: `${env.SITE_URL}/${id}.${highlight}`,
         highlight,
         encrypted: !!password,
         contents: pasteContents,
@@ -148,15 +147,20 @@ export const POST: RequestHandler = async ({ request }) => {
     const pastes = await Mongo.getNamedCollection("pastes");
     const res = await pastes.insertOne(data);
 
+    const url = `${env.SITE_URL}/${id}.${highlight}`;
+
     if (!res.acknowledged) {
         throw error(500, 'Failed to create paste');
     }
 
     if (raw) {
-        return json(data, {
+        return json({
+            ...data,
+            url,
+        }, {
             status: 201,
         });
     } else {
-        return text(data.url + '\n');
+        return text(url + '\n');
     }
 };
