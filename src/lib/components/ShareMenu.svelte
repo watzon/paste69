@@ -67,11 +67,7 @@
         <!-- Messenger Share Button -->
         <a
             class="p-2 bg-gray-900 rounded w-min"
-            href={`https://www.facebook.com/dialog/send?app_id=521270401588372&link=${encodeURIComponent(
-                pasteUrl
-            )}&redirect_uri=${encodeURIComponent(
-                pasteUrl
-            )}&display=popup&quote=${encodeURIComponent(shareMessage)}`}
+            href={`https://www.facebook.com/dialog/send?app_id=521270401588372&display=popup&quote=${encodeURIComponent(shareMessage)}`}
             target="_blank"
             rel="noopener noreferrer"
             title="Share on Messenger"
@@ -95,9 +91,7 @@
         <!-- Telegram Share Button -->
         <a
             class="p-2 bg-gray-900 rounded w-min"
-            href={`https://telegram.me/share/url?url=${encodeURIComponent(
-                pasteUrl
-            )}&text=${encodeURIComponent(shareMessage)}`}
+            href={`https://telegram.me/share/url?text=${encodeURIComponent(shareMessage)}`}
             target="_blank"
             rel="noopener noreferrer"
             title="Share on Telegram"
