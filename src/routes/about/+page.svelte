@@ -168,11 +168,11 @@
 
 	<h4 class="h4 mt-4 mb-2">Examples</h4>
 
-    <code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">curl -X POST -H "Content-Type: application/json" -d '{'{'}"contents": "paste contents"{'}'}' https://0x45.st/api/pastes`}></code>
+    <code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">curl -X POST -H "Content-Type: application/json" -d '{'{'}"contents": "paste contents"{'}'}' https://0x45.st/api/pastes</code>
 
-	<code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">curl -X POST -F "contents=paste contents" https://0x45.st/api/pastes`}></code>
+	<code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">curl -X POST -F "contents=paste contents" https://0x45.st/api/pastes</code>
 	
-	<code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">curl -X POST -d "paste contents" https://0x45.st/api/pastes`}></code>
+	<code class="bg-gray-900 py-2 px-4 mb-2 block rounded-lg">curl -X POST -d "paste contents" https://0x45.st/api/pastes</code>
 
 	<p class="mb-4 mt-4">If the paste was successfully created, the API will respond with the following JSON:</p>
 

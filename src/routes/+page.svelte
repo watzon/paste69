@@ -25,6 +25,7 @@
             },
             body: JSON.stringify({
                 contents,
+                raw: true,
                 ...event.detail,
             })
         });
