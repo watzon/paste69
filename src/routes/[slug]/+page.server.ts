@@ -13,13 +13,18 @@ export const load: PageLoad = async ({ params }) => {
         throw error(404, 'Paste not found');
     }
 
+    const highlight = ext || paste.highlight;
+    const pasteUrl = `${env.SITE_URL}/${id}.${highlight}`;
+    const ogImageUrl = `${env.SITE_URL}/images/paste/${id}.${highlight}`;
+
     // Build the response object
     const response = {
         id: paste.id,
-        url: `${env.SITE_URL}/${id}.${paste.highlight}`,
+        pasteUrl,
+        ogImageUrl,
         contents: paste.contents,
         encrypted: paste.encrypted,
-        highlight: ext || paste.highlight,
+        highlight: highlight,
         burnAfterReading: paste.burnAfterReading,
     }
 

@@ -107,8 +107,8 @@
 	<meta name="description" content="Paste69 - Paste {data.id}" />
 	<meta property="og:title" content="Paste69 - Paste {data.id}" />
 	<meta property="og:description" content="Paste69 - Paste {data.id}" />
-	<meta property="og:image" content="/images/paste/{data.id}" />
-	<meta property="og:url" content={data.url} />
+	<meta property="og:image" content={data.ogImageUrl} />
+	<meta property="og:url" content={data.pasteUrl} />
 	<meta property="og:type" content="website" />
 </svelte:head>
 
@@ -137,7 +137,7 @@
 		{/if}
 		<div class="text-gray-400 tracking-widest" style="writing-mode: vertical-rl;">SHARE</div>
 	</button>
-	<ShareMenu pasteUrl={data.url} on:copy={copyContents} />
+	<ShareMenu pasteUrl={data.pasteUrl} on:copy={copyContents} />
 </div>
 
 <div class="fixed bottom-0 right-0 w-full md:w-auto">

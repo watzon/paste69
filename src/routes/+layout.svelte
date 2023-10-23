@@ -1,12 +1,18 @@
 <script>
 	import '../app.postcss';
+	import { env } from "$env/dynamic/public";
 	import { Modal, Toast, initializeStores } from '@skeletonlabs/skeleton';
 
 	initializeStores();
+
+	const umami_url = env.PUBLIC_UMAMI_URL;
+	const umami_site_id = env.PUBLIC_UMAMI_SITE_ID;
 </script>
 
 <svelte:head>
-	<script async src="https://analytics.watzon.tech/script.js" data-website-id="542d82bc-7f24-4b96-bc79-b73f2e5f955f"></script>
+	{#if umami_url && umami_site_id}
+		<script async src="{umami_url}/script.js" data-website-id={umami_site_id}></script>
+	{/if}
 </svelte:head>
 
 <Modal />
