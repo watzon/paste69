@@ -2,3 +2,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: 'Monaspace Neon';
+        src: url('$lib/assets/fonts/MonaspaceNeon-Regular.woff') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Monaspace Neon';
+        src: url('$lib/assets/fonts/MonaspaceNeon-Bold.woff') format('truetype');
+        font-weight: bold;
+        font-style: normal;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Monaspace Neon';
+        src: url('$lib/assets/fonts/MonaspaceNeon-Italic.woff') format('truetype');
+        font-weight: normal;
+        font-style: italic;
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Monaspace Neon';
+        src: url('$lib/assets/fonts/MonaspaceNeon-BoldItalic.woff') format('truetype');
+        font-weight: bold;
+        font-style: italic;
+        font-display: swap;
+    }
+}
+
+@layer components {
+    pre, code {
+        font-family: 'Monaspace Neon', monospace !important;
+    }
+}

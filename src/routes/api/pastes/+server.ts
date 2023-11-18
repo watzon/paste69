@@ -1,10 +1,10 @@
 import { detectLanguage } from "$utils/hljs";
 import { encrypt as doEncrypt } from "$utils/crypto";
 import { error, json, text, type RequestHandler } from "@sveltejs/kit";
-import { generate } from 'random-words';
 import { Mongo } from "$lib/db/index";
 import { env } from "$env/dynamic/private";
 import { extensionMap } from "$utils/languages";
+import { generate } from 'random-words';
 
 interface PasteOptions {
     contents?: string;

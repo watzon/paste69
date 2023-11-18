@@ -35,7 +35,7 @@ hljs.addPlugin({
 			const lineNumber = index + 1;
 			const paddedLineNumber = String(lineNumber).padStart(5, ' ');
 
-			return `<div class="flex flex-row items-start justify-start gap-8"><div class="text-gray-400 select-none shrink-0 min-w-14">${paddedLineNumber}</div><pre class="whitespace-pre-wrap">${line}</pre></div>`;
+			return `<div class="flex flex-row items-start justify-start gap-2"><div class="text-gray-400 select-none shrink-0 min-w-[50px]">${paddedLineNumber}</div><pre class="whitespace-pre-wrap">${line}</pre></div>`;
 		}).join('\n');
 
 		result.value = `<div class="flex flex-col">${code}</div>`

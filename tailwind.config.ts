@@ -15,7 +15,11 @@ const config = {
 		)
 	],
 	theme: {
-		extend: {},
+		extend: {
+			fontFamily: {
+				monaspaceNeon: ['Monaspace Neon'],
+			},
+		},
 	},
 	plugins: [
 		forms,

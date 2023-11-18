@@ -2,7 +2,6 @@ import { MongoClient } from 'mongodb';
 import { env } from '$env/dynamic/private';
 import type { Db, Collection } from 'mongodb';
 import type PasteSchema from "./paste-schema";
-import { get } from 'http';
 
 // let client: MongoClient;
 // let db: Db;
