@@ -113,6 +113,9 @@
 	<meta property="og:image:alt" content="Paste69 - Paste {data.id}" />
 	<meta property="og:url" content={data.pasteUrl} />
 	<meta property="og:type" content="website" />
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:title" content="Paste69 - Paste {data.id}" />
+	<meta property="twitter:image" content={data.ogImageUrl} />
 </svelte:head>
 
 {#if renderMarkdown}
