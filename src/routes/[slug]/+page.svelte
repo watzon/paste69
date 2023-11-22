@@ -106,8 +106,11 @@
 	<title>Paste69 - Paste {data.id}</title>
 	<meta name="description" content="Paste69 - Paste {data.id}" />
 	<meta property="og:title" content="Paste69 - Paste {data.id}" />
-	<meta property="og:description" content="Paste69 - Paste {data.id}" />
 	<meta property="og:image" content={data.ogImageUrl} />
+	<meta property="og:image:type" content="image/png" />
+	<meta property="og:image:width" content="1224" />
+	<meta property="og:image:height" content="605" />
+	<meta property="og:image:alt" content="Paste69 - Paste {data.id}" />
 	<meta property="og:url" content={data.pasteUrl} />
 	<meta property="og:type" content="website" />
 </svelte:head>
