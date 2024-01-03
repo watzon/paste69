@@ -1,0 +1,90 @@
+version: 2.0
+shards:
+  athena:
+    git: https://github.com/athena-framework/framework.git
+    version: 0.18.2+git.commit.94d851b88d20506bb6f4033b5d1488682fc3822e
+
+  athena-clock:
+    git: https://github.com/athena-framework/clock.git
+    version: 0.1.1
+
+  athena-config:
+    git: https://github.com/athena-framework/config.git
+    version: 0.3.3
+
+  athena-console:
+    git: https://github.com/athena-framework/console.git
+    version: 0.3.4
+
+  athena-dependency_injection:
+    git: https://github.com/athena-framework/dependency-injection.git
+    version: 0.3.8
+
+  athena-event_dispatcher:
+    git: https://github.com/athena-framework/event-dispatcher.git
+    version: 0.2.3
+
+  athena-image_size:
+    git: https://github.com/athena-framework/image-size.git
+    version: 0.1.2
+
+  athena-negotiation:
+    git: https://github.com/athena-framework/negotiation.git
+    version: 0.1.4
+
+  athena-routing:
+    git: https://github.com/athena-framework/routing.git
+    version: 0.1.8
+
+  athena-serializer:
+    git: https://github.com/athena-framework/serializer.git
+    version: 0.3.4
+
+  athena-validator:
+    git: https://github.com/athena-framework/validator.git
+    version: 0.3.2
+
+  awscr-s3:
+    git: https://github.com/taylorfinnell/awscr-s3.git
+    version: 0.8.3
+
+  awscr-signer:
+    git: https://github.com/taylorfinnell/awscr-signer.git
+    version: 0.8.2
+
+  crecto:
+    path: ../crecto
+    version: 0.12.1+git.commit.316e925683090e7304fd223e5a20f20be79af645
+
+  crinja:
+    git: https://github.com/straight-shoota/crinja.git
+    version: 0.8.1
+
+  db:
+    git: https://github.com/crystal-lang/crystal-db.git
+    version: 0.10.1
+
+  magic:
+    git: https://github.com/dscottboggs/magic.cr.git
+    version: 1.1.0
+
+  micrate:
+    git: https://github.com/amberframework/micrate.git
+    version: 0.12.0
+
+  pg:
+    git: https://github.com/will/crystal-pg.git
+    version: 0.23.2
+
+  poncho:
+    git: https://github.com/icyleaf/poncho.git
+    version: 0.4.0
+
+  popcorn:
+    git: https://github.com/icyleaf/popcorn.git
+    version: 0.3.0
+
+  totem:
+    git: https://github.com/icyleaf/totem.git
+    version: 0.7.0
+

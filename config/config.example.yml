@@ -1,0 +1,6 @@
+host: example.com
+port: 80
+database_url: postgres://postgres@127.0.0.1/paste69
+storage:
+  type: local
+  path: ./uploads

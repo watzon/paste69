@@ -1,38 +1,47 @@
-# create-svelte
+# Paste69
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+This project has undergone several changes, but here's where we are now:
+Paste69 is a clone of the popular pastebin service 0x45.st, but written in Crystal using [the Athena framework](https://athenaframework.org/) rather than in Python with Flask.
 
-## Creating a project
+## Installation
 
-If you're seeing this, you've probably already done this step. Congrats!
+Installation requires [Crystal](https://crystal-lang.org/) and Postgres. Other databases might be supported in the future.
 
+Clone this repo:
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+git clone https://github.com/watzon/paste69
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
+Install dependencies:
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+shards install
 ```
 
-## Building
-
-To create a production version of your app:
-
+Copy and modify the config file:
 ```bash
-npm run build
+cp config/config.example.yml config/config.yml
+vim config/config.yml
 ```
 
-You can preview the production build with `npm run preview`.
+Build the executables, migrate the database, and run the server:
+```bash
+shards build
+./bin/cli db:migrate # this assumes the dabase exists, if not run db:create first
+./bin/server
+```
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Development
+
+Feel free to make pull requests!
+
+## Contributing
+
+1. Fork it (<https://github.com/watzon/paste69/fork>)
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new Pull Request
+
+## Contributors
+
+- [Chris W](https://github.com/watzon) - creator and maintainer
