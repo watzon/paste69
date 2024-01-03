@@ -12,7 +12,6 @@ module Paste69
       "templates_dir" => "src/templates",
       "max_content_length" => 256 * 1024 * 1024,
       "max_url_length" => 4096,
-      "use_x_sendfile" => false,
       "max_ext_length" => 9,
       "storage.path" => "./uploads",
       "storage.type" => "local",
@@ -32,7 +31,6 @@ module Paste69
         "video/webm" => ".webm",
         "video/x-matroska" => ".mkv",
         "application/octet-stream" => ".bin",
-        "text/plain" => ".log",
         "text/plain" => ".txt",
         "text/x-diff" => ".diff",
       },
@@ -41,7 +39,7 @@ module Paste69
         "application/java-archive",
         "application/java-vm"
       ],
-      "storage.upload_blacklist" => [] of String,
+      "storage.upload_blacklist" => nil,
       "nsfw.detect" => false,
       "nsfw.threshold" => 0.608,
       "vscan.socket" => nil,
@@ -60,7 +58,6 @@ module Paste69
       config = @config = Totem.new("config", "/etc/paste69")
       config.config_paths << "~/.paste69"
       config.config_paths << "~/.config/paste69"
-      config.config_paths << "./config"
 
       config.load! rescue nil
       config.automatic_env
