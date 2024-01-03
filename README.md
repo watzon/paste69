@@ -30,6 +30,12 @@ shards build
 ./bin/server
 ```
 
+Alternatively, you can use Docker to make things quicker:
+```bash
+docker build -v ./uploads:/app/uploads --tag paste69 ./docker
+docker run -d -p 8080:8080 paste69
+```
+
 ## Development
 
 Feel free to make pull requests!

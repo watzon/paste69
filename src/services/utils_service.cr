@@ -4,19 +4,13 @@ module Paste69
     def initialize(@config : Paste69::ConfigManager, @type_checker : Paste69::TypeChecker); end
 
     def url_for(name, *, secret : String? = nil, anchor : String? = nil)
-      host = @config.get("host").as_s
-      port = @config.get("port").as_i
-
-      url = host
-
-      if port != 80 && port!= 443
-        url += ":#{port}"
-      end
+      url = @config.get("site_url").as_s
+      ssl = @config.get("use_ssl").as_bool
 
       url = secret ? File.join(url, secret, name) : File.join(url, name)
       url += "##{anchor}" if anchor
 
-      scheme = port == 443 ? "https" : "http"
+      scheme = ssl ? "https" : "http"
       "#{scheme}://#{url}"
     end
 

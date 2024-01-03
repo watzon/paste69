@@ -4,8 +4,10 @@ module Paste69
     getter config : Totem::Config
 
     DEFAULTS = {
-      "host" => nil,
+      "host" => "0.0.0.0",
       "port" => 8080,
+      "site_url" => "0.0.0.0:8080",
+      "use_ssl" => false,
       "database_url" => "sqlite://./db/data.db",
       "templates_dir" => "src/templates",
       "max_content_length" => 256 * 1024 * 1024,
@@ -56,16 +58,13 @@ module Paste69
 
     def initialize
       config = @config = Totem.new("config", "/etc/paste69")
-      config.config_paths << "~/.totem"
-      config.config_paths << "~/.config/totem"
+      config.config_paths << "~/.paste69"
+      config.config_paths << "~/.config/paste69"
       config.config_paths << "./config"
-      begin
-        config.load!
-        config.set_defaults(DEFAULTS)
-      rescue ex
-        puts "Fatal error loading config file: #{ex.message}"
-        exit(1)
-      end
+
+      config.load! rescue nil
+      config.automatic_env
+      config.set_defaults(DEFAULTS)
     end
   end
 end

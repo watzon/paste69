@@ -1,5 +1,6 @@
-host: example.com
+host: 0.0.0.0
 port: 80
+site_url: 0x45.st
 database_url: postgres://postgres@127.0.0.1/paste69
 storage:
   type: local
