@@ -74,7 +74,7 @@ module Paste69
                 tempfile = File.tempfile(paste.sha256!, paste.ext!) do |file|
                   file.write(body)
                 end
-                ATH::BinaryFileResponse.new(
+                return ATH::BinaryFileResponse.new(
                   tempfile.path,
                   auto_last_modified: false,
                   headers: HTTP::Headers{
@@ -85,6 +85,7 @@ module Paste69
                   res.delete_file_after_send = true
                 end
               rescue ex
+                pp ex
               end
             else
               raise "Unknown storage type: #{storage_type}"
