@@ -11,7 +11,8 @@ module Paste69
       url += "##{anchor}" if anchor
 
       scheme = ssl ? "https" : "http"
-      "#{scheme}://#{url}"
+      url = "#{scheme}://#{url}"
+      url.strip("/")
     end
 
     def is_fhost_url?(url : String)
