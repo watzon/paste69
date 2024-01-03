@@ -149,19 +149,21 @@ module Paste69
       { paste.not_nil!.instance, is_new }
     end
 
-    def retrieve : Bytes?
+    def retrieve(&block)
       return nil if self.expiration.nil? || self.mgmt_token.nil?
       storage_type = config.get("storage.type").as_s
       if storage_type == "local"
         uploads_dir = config.get("storage.path").as_s
-        path = File.join(uploads_dir, self.sha256!)
-        if File.exists?(path)
-          File.read(path).to_slice
-        end
+        yield File.join(uploads_dir, self.sha256!)
       elsif storage_type == "s3"
         begin
           resp = s3_client.get_object(config.get("storage.s3.bucket").as_s, self.sha256!)
-          resp.body.to_slice
+          body = resp.body.to_slice
+          tempfile = File.tempfile(self.sha256!, self.ext!) do |file|
+            file.write(body)
+          end
+          yield tempfile.path
+          tempfile.delete
         rescue ex
         end
       else

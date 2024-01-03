@@ -7,6 +7,7 @@ require "crinja"
 require "crecto"
 require "awscr-s3"
 require "magic"
+require "tasker"
 require "pg"
 
 require "totem"

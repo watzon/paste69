@@ -32,6 +32,9 @@ dependencies:
     github: taylorfinnell/awscr-s3
   magic:
     github: dscottboggs/magic.cr
+  tasker:
+    github: spider-gazelle/tasker
+    version: ~> 2.1.4
 
 crystal: '>= 1.10.1'
 

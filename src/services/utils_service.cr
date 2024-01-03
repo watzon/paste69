@@ -40,7 +40,7 @@ module Paste69
       max_exp = @config.get("storage.max_expiration").as_i64
       max_size = @config.get("max_content_length").as_i64
       # min_exp + int((-max_exp + min_exp) * (filesize / max_size - 1) ** 3)
-      min_exp + ((max_exp - min_exp) * (size.to_f / max_size - 1) ** 3).to_i64
+      min_exp + ((-max_exp - min_exp) * (size.to_f / max_size - 1) ** 3).to_i64
     end
 
     def shorten(url : String)
@@ -181,9 +181,12 @@ module Paste69
 
       # Maximum lifetime of the file in milliseconds
       files_max_lifespan = max_lifespan(size)
+      pp! files_max_lifespan
 
       # The latest allowed expiration date for this file, in epoch millis
       files_max_expiration = files_max_lifespan + current_epoch_millis
+
+      pp! files_max_expiration
 
       if requested_expiration.nil?
         files_max_expiration

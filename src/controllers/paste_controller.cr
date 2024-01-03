@@ -1,7 +1,7 @@
 module Paste69
   @[ADI::Register(public: true)]
   class PasteController < ATH::Controller
-    def initialize(@config : Paste69::ConfigManager, @utils : Paste69::UtilsService, @url_encoder : Paste69::UrlEncoder, @db : Paste69::DBService); end
+    def initialize(@config : Paste69::ConfigManager, @utils : Paste69::UtilsService, @url_encoder : Paste69::UrlEncoder, @db : Paste69::DBService, @s3_client : Paste69::S3Client); end
 
     @[ARTA::Get("/{id}")]
     @[ARTA::Post("/{id}")]
@@ -54,16 +54,45 @@ module Paste69
             raise ATH::Exceptions::NotFound.new("Not found")
           end
 
-          if file = paste.retrieve
-            return ATH::Response.new(String.new(file), headers: HTTP::Headers{
-              "Content-Type" => paste.mime!.to_s,
-              "Content-Length" => paste.size!.to_s,
-              "X-Expires" => paste.expiration!.to_s
-            })
-          else
-            raise ATH::Exceptions::NotFound.new("Not found")
+          if paste.expiration && paste.mgmt_token
+            req.request.headers.delete("if-modified-since")
+            storage_type = @config.get("storage.type").as_s
+            if storage_type == "local"
+              uploads_dir = @config.get("storage.path").as_s
+              filepath = File.join(uploads_dir, paste.sha256!)
+              return ATH::BinaryFileResponse.new(
+                filepath,
+                auto_last_modified: false,
+                headers: HTTP::Headers{
+                  "Content-Type" => paste.mime!.to_s,
+                  "X-Expires" => paste.expiration!.to_s
+              })
+            elsif storage_type == "s3"
+              begin
+                resp = @s3_client.get_object(@config.get("storage.s3.bucket").as_s, paste.sha256!)
+                body = resp.body.to_slice
+                tempfile = File.tempfile(paste.sha256!, paste.ext!) do |file|
+                  file.write(body)
+                end
+                ATH::BinaryFileResponse.new(
+                  tempfile.path,
+                  auto_last_modified: false,
+                  headers: HTTP::Headers{
+                    "Content-Type" => paste.mime!.to_s,
+                    "X-Expires" => paste.expiration!.to_s
+                  }
+                ).tap do |res|
+                  res.delete_file_after_send = true
+                end
+              rescue ex
+              end
+            else
+              raise "Unknown storage type: #{storage_type}"
+            end
           end
         end
+
+        raise ATH::Exceptions::NotFound.new("Not found")
       else
         if req.method == "POST"
           raise ATH::Exceptions::MethodNotAllowed.new(["GET"], "Method not allowed")

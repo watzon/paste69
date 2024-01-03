@@ -53,16 +53,24 @@ shards:
     version: 0.8.2
 
   crecto:
-    path: ../crecto
+    git: https://github.com/crecto/crecto.git
     version: 0.12.1+git.commit.316e925683090e7304fd223e5a20f20be79af645
 
   crinja:
     git: https://github.com/straight-shoota/crinja.git
     version: 0.8.1
 
+  cron_parser:
+    git: https://github.com/kostya/cron_parser.git
+    version: 0.4.0
+
   db:
     git: https://github.com/crystal-lang/crystal-db.git
     version: 0.10.1
+
+  future:
+    git: https://github.com/crystal-community/future.cr.git
+    version: 1.0.0
 
   magic:
     git: https://github.com/dscottboggs/magic.cr.git
@@ -83,6 +91,10 @@ shards:
   popcorn:
     git: https://github.com/icyleaf/popcorn.git
     version: 0.3.0
+
+  tasker:
+    git: https://github.com/spider-gazelle/tasker.git
+    version: 2.1.4
 
   totem:
     git: https://github.com/icyleaf/totem.git
