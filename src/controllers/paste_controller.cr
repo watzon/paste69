@@ -126,6 +126,8 @@ module Paste69
       user_agent = req.headers["User-Agent"]?
       remote_addr = req.headers["Remote-Addr"]?
 
+      pp req
+
       if !remote_addr
         addr = req.request.remote_address
         if addr.is_a?(Socket::IPAddress)
