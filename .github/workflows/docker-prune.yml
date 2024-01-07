@@ -1,0 +1,29 @@
+name: Prune Containers
+
+on:
+  schedule:
+    - cron: '33 6 * * *' # 6:33 UTC every day
+  workflow_dispatch:
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    
+    steps:
+      - name: Prune
+        uses: vlaurin/action-ghcr-prune@v0.5.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          organization: ${{ github.actor }}
+          container: ${{ env.IMAGE_NAME }}
+          dry-run: true # Dry-run first, then change to `false`
+          keep-younger-than: 2 # days
+          keep-last: 2
+          prune-untagged: true
