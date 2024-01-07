@@ -1,26 +1,35 @@
-name: Prune Containers
+name: Prune containers
 
 on:
-  schedule:
-    - cron: '33 6 * * *' # 6:33 UTC every day
-  workflow_dispatch:
-
-env:
-  package_name: paste69
+  workflow_call:
+    inputs:
+      container:
+        type: string
+        required: true
+        description: "Container name without organization"
+      older-than:
+        type: number
+        default: 14
+        description: "Prune containers older than X days"
+      keep-last:
+        type: number
+        default: 3
+        description: "Keep last X containers"
+    secrets:
+      token:
+        required: true
+        description: "Private access token with packages read/delete permission"
 
 jobs:
-  build:
+  prune:
     runs-on: ubuntu-latest
-    permissions: write-all
-    
     steps:
-      - name: Prune
+      - name: Prune GHCR containers
         uses: vlaurin/action-ghcr-prune@v0.5.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          organization: ${{ github.repository_owner }}
-          container: ${{ env.package_name }}
-          dry-run: true # Dry-run first, then change to `false`
-          keep-younger-than: 2 # days
-          keep-last: 2
+          token: ${{ secrets.TOKEN }}
+          organization: meikooy
+          container: ${{ inputs.container }}
+          keep-younger-than: ${{ inputs.older-than }}
+          keep-last: ${{ inputs.keep-last }}
           prune-untagged: true
