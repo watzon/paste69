@@ -183,12 +183,9 @@ module Paste69
 
       # Maximum lifetime of the file in milliseconds
       files_max_lifespan = max_lifespan(size)
-      pp! files_max_lifespan
 
       # The latest allowed expiration date for this file, in epoch millis
       files_max_expiration = files_max_lifespan + current_epoch_millis
-
-      pp! files_max_expiration
 
       if requested_expiration.nil?
         files_max_expiration

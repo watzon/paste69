@@ -124,9 +124,7 @@ module Paste69
 
       content_type = req.headers["Content-Type"]?
       user_agent = req.headers["User-Agent"]?
-      remote_addr = req.headers["Remote-Addr"]?
-
-      pp req
+      remote_addr = req.headers["Remote-Addr"]? || req.headers["X-Forwarded-For"]?
 
       if !remote_addr
         addr = req.request.remote_address
