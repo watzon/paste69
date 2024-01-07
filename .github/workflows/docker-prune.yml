@@ -1,7 +1,7 @@
 name: Prune containers
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       container:
         type: string
@@ -15,10 +15,6 @@ on:
         type: number
         default: 3
         description: "Keep last X containers"
-    secrets:
-      token:
-        required: true
-        description: "Private access token with packages read/delete permission"
 
 jobs:
   prune:
@@ -27,7 +23,7 @@ jobs:
       - name: Prune GHCR containers
         uses: vlaurin/action-ghcr-prune@v0.5.0
         with:
-          token: ${{ secrets.TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           organization: meikooy
           container: ${{ inputs.container }}
           keep-younger-than: ${{ inputs.older-than }}
