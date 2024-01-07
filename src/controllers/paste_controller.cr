@@ -85,7 +85,7 @@ module Paste69
                   res.delete_file_after_send = true
                 end
               rescue ex
-                pp ex
+                puts "Error getting object: #{ex.message}"
               end
             else
               raise "Unknown storage type: #{storage_type}"

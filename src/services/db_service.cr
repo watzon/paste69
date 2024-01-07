@@ -20,7 +20,6 @@ module Paste69
             raise "Unknown or unsupported database adapter: #{db_uri}"
           end
         conf.uri = db_uri
-        pp conf
       end
 
       # TODO: Add debug flag to config
