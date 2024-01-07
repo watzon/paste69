@@ -20,22 +20,26 @@ Some features have also yet to be implemented. They will be coming in the near f
 Installation requires [Crystal](https://crystal-lang.org/) and Postgres. Other databases might be supported in the future.
 
 Clone this repo:
+
 ```bash
 git clone https://github.com/watzon/paste69
 ```
 
 Install dependencies:
+
 ```bash
 shards install
 ```
 
 Copy and modify the config file:
+
 ```bash
 cp config/config.example.yml config/config.yml
 vim config/config.yml
 ```
 
 Build the executables, migrate the database, and run the server:
+
 ```bash
 shards build
 ./bin/cli db:migrate # this assumes the dabase exists, if not run db:create first
@@ -45,12 +49,14 @@ shards build
 ### Using Docker
 
 If you want, you can build the Docker container yourself locally:
+
 ```bash
 docker build -v ./uploads:/app/uploads --tag paste69 ./docker
 docker run -d -p 8080:8080 paste69
 ```
 
 Or, you can use the hosted version available through ghcr:
+
 ```bash
 docker pull ghcr.io/watzon/paste69:main
 docker run -d -p 8080:8080 ghcr.io/watzon/paste69:main
@@ -97,7 +103,6 @@ The following table contains all available configuration options, their default 
 | `vscan.interval`           | `604800`                  | `VSCAN.INTERVAL`           | How often to scan for viruses                       |
 | `vscan.ignore`             | _too long_                | `VSCAN.IGNORE`             | Mime types for which to ignore virus scanning       |
 | `url_alphabet`             | `"01234567890abcdef..."`  | `URL_ALPHABET`             | Alphabet string to use for shortened URL creation   |
-
 
 ### Custom Templates
 

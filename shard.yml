@@ -17,9 +17,8 @@ dependencies:
   crinja:
     github: straight-shoota/crinja
   crecto:
-    # github: Crecto/crecto
-    # branch: master
-    path: ../crecto
+    github: Crecto/crecto
+    branch: master
   pg:
     github: will/crystal-pg
     version: ~> 0.28.0

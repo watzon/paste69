@@ -54,8 +54,8 @@ shards:
     version: 0.8.2
 
   crecto:
-    path: ../crecto
-    version: 0.12.1
+    git: https://github.com/crecto/crecto.git
+    version: 0.12.1+git.commit.b645ea55414bbf8f7ee6bd91c3298fd0ed50a26c
 
   crinja:
     git: https://github.com/straight-shoota/crinja.git
