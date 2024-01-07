@@ -29,11 +29,11 @@ storage:
     application/octet-stream: .bin
     text/plain: .txt
     text/x-diff: .diff
-  mime_blacklist:
+  mime_blocklist:
     - application/x-dosexec
     - application/java-archive
     - application/java-vm
-  upload_blacklist: null
+  upload_blocklist: null
 nsfw:
   detect: false
   theshold: 0.608

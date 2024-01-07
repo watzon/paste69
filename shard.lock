@@ -1,8 +1,9 @@
+# NOTICE: This lockfile contains some overrides from shard.override.yml
 version: 2.0
 shards:
   athena:
     git: https://github.com/athena-framework/framework.git
-    version: 0.18.2+git.commit.94d851b88d20506bb6f4033b5d1488682fc3822e
+    version: 0.18.2+git.commit.6ecc3c0f4030445f7131c8fefdeddbda1631c05d
 
   athena-clock:
     git: https://github.com/athena-framework/clock.git
@@ -53,8 +54,8 @@ shards:
     version: 0.8.2
 
   crecto:
-    git: https://github.com/crecto/crecto.git
-    version: 0.12.1+git.commit.316e925683090e7304fd223e5a20f20be79af645
+    path: ../crecto
+    version: 0.12.1
 
   crinja:
     git: https://github.com/straight-shoota/crinja.git
@@ -64,9 +65,9 @@ shards:
     git: https://github.com/kostya/cron_parser.git
     version: 0.4.0
 
-  db:
+  db: # Overridden
     git: https://github.com/crystal-lang/crystal-db.git
-    version: 0.10.1
+    version: 0.13.0
 
   future:
     git: https://github.com/crystal-community/future.cr.git
@@ -78,11 +79,11 @@ shards:
 
   micrate:
     git: https://github.com/amberframework/micrate.git
-    version: 0.12.0
+    version: 0.13.0
 
   pg:
     git: https://github.com/will/crystal-pg.git
-    version: 0.23.2
+    version: 0.28.0
 
   poncho:
     git: https://github.com/icyleaf/poncho.git
@@ -91,6 +92,14 @@ shards:
   popcorn:
     git: https://github.com/icyleaf/popcorn.git
     version: 0.3.0
+
+  sqlite3:
+    git: https://github.com/crystal-lang/crystal-sqlite3.git
+    version: 0.21.0
+
+  subnet:
+    git: https://github.com/watzon/subnet.git
+    version: 0.1.0+git.commit.f754104cdfc1872ca66f469801fd3f2e8739e2a9
 
   tasker:
     git: https://github.com/spider-gazelle/tasker.git

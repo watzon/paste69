@@ -123,8 +123,17 @@ module Paste69
       _, expires = form["expires"]? || {nil, nil}
 
       content_type = req.headers["Content-Type"]?
-      remote_addr = req.headers["Remote-Addr"]?
       user_agent = req.headers["User-Agent"]?
+      remote_addr = req.headers["Remote-Addr"]?
+
+      if !remote_addr
+        addr = req.request.remote_address
+        if addr.is_a?(Socket::IPAddress)
+          remote_addr = addr.address
+        elsif addr.is_a?(Socket::UNIXAddress)
+          remote_addr = addr.path
+        end
+      end
 
       if form.has_key?("file")
         filename, body = form["file"]

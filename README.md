@@ -14,7 +14,6 @@ Some features have also yet to be implemented. They will be coming in the near f
 
 - NSFW detection
 - Virus scanning
-- IP blocklisting
 
 ## Installation
 
@@ -89,8 +88,8 @@ The following table contains all available configuration options, their default 
 | `storage.s3.secret_key`    | `nil`                     | `STORAGE.S3.SECRET_KEY`    | S3 secret key                                       |
 | `storage.secret_bytes`     | `16`                      | `STORAGE.SECRET_BYTES`     | Number of bytes to use for secrets                  |
 | `storage.ext_override`     | _too long_                | `STORAGE.EXT_OVERRIDE`     | File extension override map (mime => ext)           |
-| `storage.mime_blacklist`   | _too long_                | `STORAGE.MIME_BLACKLIST`   | Array containing mime types to blacklist            |
-| `storage.upload_blacklist` | `nil`                     | `STORAGE.UPLOAD_BLACKLIST` | Path to a file containing banned IP addresses       |
+| `storage.mime_blocklist`   | _too long_                | `STORAGE.MIME_BLOCKLIST`   | Array containing mime types to blocklist            |
+| `storage.upload_blocklist` | `nil`                     | `STORAGE.UPLOAD_BLOCKLIST` | Path to a file containing banned IP addresses       |
 | `nsfw.detect`              | `false`                   | `NSFW.DETECT`              | Enable NSFW detection (TODO)                        |
 | `nsfw.threshold`           | `0.608`                   | `NSFW.THRESHOLD`           | NSFW detection threshold                            |
 | `vscan.socket`             | `nil`                     | `VSCAN.SOCKET`             | ClamAV socket for virus scanning (TODO)             |
@@ -120,6 +119,15 @@ and then update your config file (or set the TEMPLATES_DIR environment variable)
 ```
 
 this directory will be used __in stead of__ the default templates, and not in addition to, so be sure to copy all of the templates over.
+
+### IP Blocklisting
+
+IP blocklisting is supported. All uploads database entries _should_ contain an IP address, telling you where it was uploaded from. If you want to block a certain IP address (or even an entire subnet), you can create a file containing a list of IP addresses to block and upadate your config file with the path to the file. The file should contain a single IP address or subnet per line. For example:
+
+```text
+192.168.1.1
+172.16.17.32/24
+```
 
 ## Development
 

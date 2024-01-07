@@ -8,9 +8,19 @@ module Paste69
     @@config = Crecto::Repo::Config.new
 
     def initialize(@cfg : Paste69::ConfigManager)
+      db_uri = @cfg.get("database_url").as_s
+
       config do |conf|
-        conf.adapter = Crecto::Adapters::Postgres
-        conf.uri = @cfg.get("database_url").as_s
+        conf.adapter = case db_uri
+          when /^postgres/
+            Crecto::Adapters::Postgres
+          when /^sqlite/
+            Crecto::Adapters::SQLite3
+          else
+            raise "Unknown or unsupported database adapter: #{db_uri}"
+          end
+        conf.uri = db_uri
+        pp conf
       end
 
       # TODO: Add debug flag to config

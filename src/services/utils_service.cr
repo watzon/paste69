@@ -59,13 +59,14 @@ module Paste69
       ATH::Response.new(u.get_url)
     end
 
-    def in_upload_blacklist(addr : String)
-      # TODO: Implement this
-      false
+    def in_upload_blocklist?(addr : String)
+      ip = Subnet.parse(addr)
+      bl = @config.upload_blocklist
+      bl.any? { |b| b.includes?(ip) }
     end
 
     def store_file(data, content_type : String? = nil, filename : String? = nil, requested_expiration : Int64? = nil, addr : String? = nil, ua : String? = nil, secret : Bool = false)
-      if addr && in_upload_blacklist(addr)
+      if addr && in_upload_blocklist?(addr)
         raise Exceptions::UnavailableForLegalReasons.new("Your host is blocked from uploading files")
       end
 
@@ -152,8 +153,8 @@ module Paste69
 
       mime = guess || "text/plain"
 
-      # Check the mimetype against the blacklist
-      if @config.get("storage.mime_blacklist").as_a.includes?(mime)
+      # Check the mimetype against the blocklist
+      if @config.get("storage.mime_blocklist").as_a.includes?(mime)
         raise ATH::Exceptions::UnsupportedMediaType.new("Blacklisted filetype")
       end
 

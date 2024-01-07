@@ -17,11 +17,15 @@ dependencies:
   crinja:
     github: straight-shoota/crinja
   crecto:
-    github: Crecto/crecto
-    branch: master
+    # github: Crecto/crecto
+    # branch: master
+    path: ../crecto
   pg:
     github: will/crystal-pg
-    version: ~> 0.23.2
+    version: ~> 0.28.0
+  sqlite3:
+    github: crystal-lang/crystal-sqlite3
+    version: ~> 0.21.0
   totem:
     github: icyleaf/totem
   poncho:
@@ -35,6 +39,9 @@ dependencies:
   tasker:
     github: spider-gazelle/tasker
     version: ~> 2.1.4
+  subnet:
+    github: watzon/subnet
+    branch: master
 
 crystal: '>= 1.10.1'
 

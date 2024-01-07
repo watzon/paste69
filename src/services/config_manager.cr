@@ -1,8 +1,6 @@
 module Paste69
   @[ADI::Register(name: "config_manager", public: true)]
   class ConfigManager
-    getter config : Totem::Config
-
     DEFAULTS = {
       "host" => "0.0.0.0",
       "port" => 8080,
@@ -34,12 +32,12 @@ module Paste69
         "text/plain" => ".txt",
         "text/x-diff" => ".diff",
       },
-      "storage.mime_blacklist" => [
+      "storage.mime_blocklist" => [
         "application/x-dosexec",
         "application/java-archive",
         "application/java-vm"
       ],
-      "storage.upload_blacklist" => nil,
+      "storage.upload_blocklist" => nil,
       "nsfw.detect" => false,
       "nsfw.threshold" => 0.608,
       "vscan.socket" => nil,
@@ -52,16 +50,39 @@ module Paste69
       "url_alphabet" => "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
     }
 
+    getter config : Totem::Config
+    getter upload_blocklist = [] of Subnet::IPv4 | Subnet::IPv6
+
     delegate :get, :set, to: @config
 
     def initialize
       config = @config = Totem.new("config", "/etc/paste69")
+      config.config_paths << "./config"
       config.config_paths << "~/.paste69"
       config.config_paths << "~/.config/paste69"
 
+      config.set_defaults(DEFAULTS)
       config.load! rescue nil
       config.automatic_env
-      config.set_defaults(DEFAULTS)
+
+      init_upload_blocklist
+    end
+
+    def init_upload_blocklist
+      if path = get("storage.upload_blocklist").as_s?
+        text = File.read(path)
+        text = text.gsub(/#.*/, "").gsub(/\n+/, "\n")
+        lines = text.lines.map(&.strip)
+        lines.each_with_index do |line, i|
+          begin
+            ip = Subnet.parse(line)
+            @upload_blocklist << ip
+          rescue ex : ArgumentError
+            # TODO: Use logger instead of puts.
+            puts "Invalid IP address in upload blocklist line #{i + 1}"
+          end
+        end
+      end
     end
   end
 end
