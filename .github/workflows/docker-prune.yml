@@ -21,7 +21,6 @@ jobs:
         uses: vlaurin/action-ghcr-prune@v0.5.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          organization: watzon
           container: paste69
           keep-younger-than: ${{ inputs.older-than }}
           keep-last: ${{ inputs.keep-last }}
