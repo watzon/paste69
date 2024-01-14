@@ -125,11 +125,11 @@ module Paste69
       gmime = mime.split(";")[0]
       guess = MIME.extensions(gmime).first?
 
-      if !ext
+      if !ext || ext.empty?
         override = @config.get("storage.ext_override").as_h
         if gmime.in?(override)
           ext = override[gmime].as_s
-        elsif guess
+        elsif guess && !guess.empty?
           ext = guess
         else
           ext = ".bin"

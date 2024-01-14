@@ -136,7 +136,8 @@ module Paste69
       end
 
       if form.has_key?("file")
-        filename, body = form["file"]
+        _filename, body = form["file"]
+        _, filename = form["filename"] || {nil, _filename}
         @utils.store_file(
           body,
           content_type,

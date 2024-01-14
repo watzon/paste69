@@ -91,13 +91,13 @@ module Paste69
 
           # Also generate a new management token
           paste.mgmt_token = Random.new.urlsafe_base64(config.get("storage.secret_bytes").as_i)
-
-          is_updated = true
         else
           # The file already exists, update the expiration as needed
           paste.expiration = [paste.expiration!, expiration].max.to_i64
           is_new = false
         end
+
+        is_updated = true
       else
         mime = utils.get_mime(data, filename)
         ext = utils.get_ext(mime, filename)
