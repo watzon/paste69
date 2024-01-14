@@ -137,11 +137,11 @@ module Paste69
 
       if form.has_key?("file")
         filename, body = form["file"]
-        _, ext = form["ext"] || {nil, nil}
 
-        if ext
-          filename = filename ? File.basename(filename, File.extname(filename)) : "file"
+        if form.has_key?("ext")
+          _, ext = form["ext"]
           ext = String.new(ext).lstrip(".")
+          filename = filename ? File.basename(filename, File.extname(filename)) : "file"
           filename = "#{filename}.#{ext}"
         end
 
