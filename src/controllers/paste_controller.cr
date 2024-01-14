@@ -137,7 +137,9 @@ module Paste69
 
       if form.has_key?("file")
         _filename, body = form["file"]
-        _, filename = form["filename"] || {nil, _filename}
+        _, filename = form["filename"] || {nil, nil}
+        filename = filename ? String.new(filename) : nil
+
         @utils.store_file(
           body,
           content_type,
