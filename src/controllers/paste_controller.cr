@@ -3,10 +3,10 @@ module Paste69
   class PasteController < ATH::Controller
     def initialize(@config : Paste69::ConfigManager, @utils : Paste69::UtilsService, @url_encoder : Paste69::UrlEncoder, @db : Paste69::DBService, @s3_client : Paste69::S3Client); end
 
-    @[ARTA::Get("/{id}")]
-    @[ARTA::Post("/{id}")]
-    @[ARTA::Get("/{secret}/{id}")]
-    @[ARTA::Post("/{secret}/{id}")]
+    @[ARTA::Get("/{id}", requirements: {"id" => /.+/})]
+    @[ARTA::Post("/{id}", requirements: {"id" => /.+/})]
+    @[ARTA::Get("/{secret}/{id}", requirements: {"id" => /.+/})]
+    @[ARTA::Post("/{secret}/{id}", requirements: {"id" => /.+/})]
     def get_paste(req : ATH::Request, id : String, secret : String? = nil) : ATH::Response
       path = id.split("/").first
       sufs = File.extname(path)
@@ -136,9 +136,14 @@ module Paste69
       end
 
       if form.has_key?("file")
-        _filename, body = form["file"]
-        _, filename = form["filename"] || {nil, nil}
-        filename = filename ? String.new(filename) : nil
+        filename, body = form["file"]
+        _, ext = form["ext"] || {nil, nil}
+
+        if ext
+          filename = filename ? File.basename(filename, File.extname(filename)) : "file"
+          ext = String.new(ext).lstrip(".")
+          filename = "#{filename}.#{ext}"
+        end
 
         @utils.store_file(
           body,
