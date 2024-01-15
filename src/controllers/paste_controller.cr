@@ -136,14 +136,16 @@ module Paste69
 
       if form.has_key?("file")
         filename, body = form["file"]
+      end
 
-        if form.has_key?("ext")
-          _, ext = form["ext"]
-          ext = String.new(ext).lstrip(".")
-          filename = filename ? File.basename(filename, File.extname(filename)) : "file"
-          filename = "#{filename}.#{ext}"
-        end
+      if form.has_key?("ext")
+        _, ext = form["ext"]
+        ext = String.new(ext).lstrip(".")
+        filename = filename ? File.basename(filename, File.extname(filename)) : "file"
+        filename = "#{filename}.#{ext}"
+      end
 
+      if body
         @utils.store_file(
           body,
           content_type,
@@ -157,6 +159,8 @@ module Paste69
         _, body = form["url"]
         @utils.store_url(
           String.new(body),
+          filename,
+          expires ? String.new(expires).to_i64 : nil,
           remote_addr,
           user_agent,
           !!secret,

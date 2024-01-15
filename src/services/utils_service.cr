@@ -81,7 +81,7 @@ module Paste69
       res
     end
 
-    def store_url(url : String, addr : String? = nil, ua : String? = nil, secret : Bool = false)
+    def store_url(url : String, filename : String? = nil, requested_expiration : Int64? = nil, addr : String? = nil, ua : String? = nil, secret : Bool = false)
       if is_fhost_url?(url)
         raise ATH::Exceptions::BadRequest.new("Invalid URL")
       end
@@ -102,7 +102,8 @@ module Paste69
       if res.headers.has_key?("Content-Length")
         l = res.headers["Content-Length"].to_i64
         if l <= @config.get("max_content_length").as_i64
-          return store_file(res.body.to_slice, res.headers["Content-Type"], nil, nil, addr, ua, secret)
+          filename ||= File.basename(url)
+          return store_file(res.body.to_slice, res.headers["Content-Type"], filename, nil, addr, ua, secret)
         else
           raise Exceptions::ContentTooLarge.new("Content-Length was too large")
         end
