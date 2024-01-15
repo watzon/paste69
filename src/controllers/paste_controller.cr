@@ -38,7 +38,6 @@ module Paste69
               raise ATH::Exceptions::BadRequest.new("Missing token")
             end
 
-
             if fd.has_key?("delete")
               paste.delete
               return ATH::Response.new("", status: 200)

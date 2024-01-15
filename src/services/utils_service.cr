@@ -88,6 +88,12 @@ module Paste69
 
       headers = HTTP::Headers{  "Accept-Encoding" => "identity" }
       res = HTTP::Client.get(url, headers: headers)
+      attempts = 1
+
+      while (location = res.headers["Location"]?) && attempts <= 3
+        res = HTTP::Client.get(location, headers: headers)
+        attempts += 1
+      end
 
       if res.status.to_i >= 300
         raise ATH::Exceptions::BadRequest.new("URL response was not OK")

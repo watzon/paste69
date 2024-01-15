@@ -10,6 +10,9 @@ targets:
   cli:
     main: src/console.cr
 
+crystalline:
+  main: src/main.cr
+
 dependencies:
   athena:
     github: athena-framework/framework
