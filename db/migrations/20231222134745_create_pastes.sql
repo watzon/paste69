@@ -1,7 +1,7 @@
 -- +micrate Up
 -- SQL in section 'Up' is executed when this migration is applied
 CREATE TABLE IF NOT EXISTS pastes (
-    id BIGSERIAL PRIMARY KEY,
+    id INTEGER NOT NULL PRIMARY KEY,
     sha256 TEXT UNIQUE NOT NULL,
     ext TEXT NOT NULL,
     mime TEXT NOT NULL,
