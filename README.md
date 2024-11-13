@@ -1,5 +1,8 @@
 # Paste69
 
+> [!WARNING]  
+> Please see [0x45](https://github.com/watzon/0x45) for the successor to this project.
+
 This project has undergone several changes, but here's where we are now:
 Paste69 is a clone of the popular pastebin service 0x45.st, but written in Crystal using [the Athena framework](https://athenaframework.org/) rather than in Python with Flask.
 
